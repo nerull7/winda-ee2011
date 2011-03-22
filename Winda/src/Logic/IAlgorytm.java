@@ -10,5 +10,5 @@ package Logic;
  * @author Tomek
  */
 public interface IAlgorytm {
-
+    public int [] Trasa(Pasazer [] pasazerowie);
 }

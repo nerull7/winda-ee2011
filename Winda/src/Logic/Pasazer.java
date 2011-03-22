@@ -31,4 +31,12 @@ public class Pasazer {
     public int GetStop() {
         return this.stop;
     }
+
+    public void SetStart(int start) {
+        this.start = start;
+    }
+
+    public void SetStop(int stop) {
+        this.stop = stop;
+    }
 }
