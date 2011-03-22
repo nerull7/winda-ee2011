@@ -11,4 +11,8 @@ package Logic;
  */
 public class AlgorytmGoraDol implements IAlgorytm {
 
+    public int[] Trasa(Pasazer[] pasazerowie) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
