@@ -9,7 +9,7 @@
  * Created on 2011-03-20, 15:34:47
  */
 
-package winda;
+package winda.gui;
 
 /**
  *
@@ -65,7 +65,7 @@ public class Ramka extends javax.swing.JFrame {
         jSeparator3.setName("jSeparator3"); // NOI18N
         jScrollPane1.setViewportView(jSeparator3);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(winda.WindaApp.class).getContext().getResourceMap(Ramka.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(winda.gui.WindaApp.class).getContext().getResourceMap(Ramka.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 

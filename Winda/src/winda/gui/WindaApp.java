@@ -2,7 +2,7 @@
  * WindaApp.java
  */
 
-package winda;
+package winda.gui;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;

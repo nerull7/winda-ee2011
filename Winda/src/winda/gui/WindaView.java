@@ -2,7 +2,7 @@
  * WindaView.java
  */
 
-package winda;
+package winda.gui;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
@@ -157,7 +157,7 @@ public class WindaView extends FrameView {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(winda.WindaApp.class).getContext().getResourceMap(WindaView.class);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(winda.gui.WindaApp.class).getContext().getResourceMap(WindaView.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
@@ -567,7 +567,7 @@ public class WindaView extends FrameView {
         fileMenu.setText(resourceMap.getString("fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(winda.WindaApp.class).getContext().getActionMap(WindaView.class, this);
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(winda.gui.WindaApp.class).getContext().getActionMap(WindaView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         fileMenu.add(exitMenuItem);
