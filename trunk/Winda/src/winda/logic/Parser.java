@@ -70,6 +70,10 @@ public class Parser {
     public static void main(String[] args) {
         //Do testów
         //plik odczytu z args
+        //Przykładowy plik dodałem do svn w głównym katalogu projektu
+        //nazywa się DemoDane.txt
+        //Składnia pliku to:
+        //Pietro_startowe spacja pietro_koncowe koniec lini
         System.out.println("Wczytywanie pliku " + args[0]);
         Parser p = new Parser();
         Pasazer [] pasazerowie = null;
