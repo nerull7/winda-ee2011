@@ -81,4 +81,17 @@ public class Winda {
         CzasJazdy = Trasa.length*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
     }
+
+    public static void main(String[] args) {
+
+        Winda w = new Winda();
+        w.SetNajblizszeWzwanie();
+        w.Start();
+        int [] trasa = w.GetTrasa();
+        for(int i = 0;i<trasa.length;i++)
+            System.out.print(trasa[i] + " ");
+        System.out.print('\n');
+        System.out.println("Czas jazdy = " + w.GetCzasJazdy());
+        System.out.println("Średni czas obsługi jednego pasażera = " + w.GetCzasSredniObslugi());
+    }
 }
