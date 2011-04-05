@@ -15,4 +15,8 @@ public class AlgorytmGoraDol implements IAlgorytm {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void SetMaxPietro(int maxPietro) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

@@ -15,13 +15,11 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
     int minPietro = 1;
     int stop = 0;
     int start = 0;
-    Winda ww = new Winda();
     Pasazer p = new Pasazer(0,0,0);
 
 
 
     public int[] Trasa(Pasazer[] pasazerowie){
-        maxPietro = ww.GetIloscPieter();
         int [] t = new int[2*pasazerowie.length+1];
         int tab_len = 0;
         int iluPasazerow = 0;
@@ -123,5 +121,9 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
         }
 
     return t;
+    }
+
+    public void SetMaxPietro(int maxPietro) {
+        this.maxPietro = maxPietro;
     }
 }
