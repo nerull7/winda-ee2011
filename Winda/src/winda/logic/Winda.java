@@ -77,13 +77,10 @@ public class Winda {
     }
 
     public void Start(){
+        AlgorytmWindy.SetMaxPietro(IloscPieter);
         Trasa = AlgorytmWindy.Trasa(Pasazerowie);
         CzasJazdy = Trasa.length*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
-    }
-
-    public int GetIloscPieter(){
-        return this.IloscPieter;
     }
 
     public static void main(String[] args) {
