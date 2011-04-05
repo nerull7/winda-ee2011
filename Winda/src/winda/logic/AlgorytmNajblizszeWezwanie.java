@@ -10,14 +10,18 @@ package winda.logic;
  * @author Tomek
  */
 public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
-   int pietroWindy = 1;
-    int maxPietro = 12;
+    int pietroWindy = 1;
+    int maxPietro;
     int minPietro = 1;
     int stop = 0;
     int start = 0;
+    Winda ww = new Winda();
     Pasazer p = new Pasazer(0,0,0);
 
+
+
     public int[] Trasa(Pasazer[] pasazerowie){
+        maxPietro = ww.GetIloscPieter();
         int [] t = new int[2*pasazerowie.length+1];
         int tab_len = 0;
         int iluPasazerow = 0;
