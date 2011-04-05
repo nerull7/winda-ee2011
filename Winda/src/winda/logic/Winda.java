@@ -5,6 +5,10 @@
 
 package winda.logic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author Tomek
@@ -17,7 +21,7 @@ public class Winda {
     private double CzasSredniObslugi;
     private int IloscPieter;
     private int IloscPasazerow;
-    private Pasazer [] Pasazerowie;
+    private List<Pasazer> pasazerowieCollection = new ArrayList<Pasazer>();
     private Parser parser = new Parser();
     private int [] Trasa;
 
@@ -26,7 +30,8 @@ public class Winda {
         CzasJazdyPietro = 1;
         CzasWeWyOsoby = 1;
         IloscPieter = 12;
-        Pasazerowie = parser.Wczytaj("C:\\DemoDane.txt");
+        Pasazer [] Pasazerowie = parser.Wczytaj("C:\\DemoDane.txt");
+        pasazerowieCollection.addAll(Arrays.asList(Pasazerowie));
         IloscPasazerow = Pasazerowie.length;
     }
 
@@ -51,12 +56,12 @@ public class Winda {
     }
 
     public void SetNoweProjekt(){
-        this.Pasazerowie = new Pasazer[1000];
+        this.pasazerowieCollection.clear();
         IloscPasazerow = 0;
     }
 
     public void AddPasazer(int start, int stop){
-        this.Pasazerowie[IloscPasazerow] = new Pasazer(IloscPasazerow, start, stop);
+        this.pasazerowieCollection.add(new Pasazer(IloscPasazerow, start, stop));
         IloscPasazerow++;
     }
 
@@ -73,15 +78,20 @@ public class Winda {
     }
 
     public void ZapiszPasazerow(String filename){
+        Pasazer [] Pasazerowie = pasazerowieCollection.toArray(new Pasazer[0]);
         parser.Zapisz(filename, Pasazerowie);
     }
 
     public void WczytajPasazerow(String filename){
-        this.Pasazerowie = parser.Wczytaj(filename);
+        this.pasazerowieCollection.clear();
+        Pasazer [] Pasazerowie = parser.Wczytaj(filename);
+        pasazerowieCollection.addAll(Arrays.asList(Pasazerowie));
+        IloscPasazerow = Pasazerowie.length;
     }
 
     public void Start(){
         AlgorytmWindy.SetMaxPietro(IloscPieter);
+        Pasazer [] Pasazerowie = pasazerowieCollection.toArray(new Pasazer[0]);
         Trasa = AlgorytmWindy.Trasa(Pasazerowie);
         CzasJazdy = Trasa.length*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
