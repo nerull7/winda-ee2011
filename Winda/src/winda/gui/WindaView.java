@@ -11,16 +11,18 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ButtonGroup;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import winda.logic.Winda;
 
 /**
  * The application's main frame.
  */
 public class WindaView extends FrameView {
-
+    Winda w = new Winda();
     public WindaView(SingleFrameApplication app) {
         super(app);
 
@@ -174,6 +176,20 @@ public class WindaView extends FrameView {
         jPanel1.setName("jPanel1"); // NOI18N
 
         jSpinner1.setName("jSpinner1"); // NOI18N
+        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner1StateChanged(evt);
+            }
+        });
+        jSpinner1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jSpinner1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         jSpinner2.setName("jSpinner2"); // NOI18N
 
@@ -245,6 +261,11 @@ public class WindaView extends FrameView {
 
         jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
         jButton5.setName("jButton5"); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
         jButton6.setName("jButton6"); // NOI18N
@@ -326,9 +347,19 @@ public class WindaView extends FrameView {
 
         jRadioButton1.setText(resourceMap.getString("jRadioButton1.text")); // NOI18N
         jRadioButton1.setName("jRadioButton1"); // NOI18N
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         jRadioButton2.setText(resourceMap.getString("jRadioButton2.text")); // NOI18N
         jRadioButton2.setName("jRadioButton2"); // NOI18N
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -374,6 +405,11 @@ public class WindaView extends FrameView {
         jLabel9.setName("jLabel9"); // NOI18N
 
         jSpinner6.setName("jSpinner6"); // NOI18N
+        jSpinner6.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner6StateChanged(evt);
+            }
+        });
 
         jLabel10.setText(resourceMap.getString("jLabel10.text")); // NOI18N
         jLabel10.setName("jLabel10"); // NOI18N
@@ -425,6 +461,11 @@ public class WindaView extends FrameView {
 
         jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
         jButton3.setName("jButton3"); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
         jButton4.setName("jButton4"); // NOI18N
@@ -605,6 +646,51 @@ public class WindaView extends FrameView {
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        String st = (String) jSpinner3.getValue().toString();
+        String sp = (String) jSpinner4.getValue().toString();
+        String ip = (String) jSpinner5.getValue().toString();
+        int start = Integer.parseInt(st);
+        int stop = Integer.parseInt(sp);
+        int ilePasazerow = Integer.parseInt(ip);
+ 
+        if(jCheckBox1.isSelected()){
+            for(int i = 0; i < ilePasazerow; i++)
+                w.AddPasazer(start, stop);
+        }
+        else{
+            w.AddPasazer(start, stop);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jSpinner1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner1AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSpinner1AncestorAdded
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        w.SetGoraDol();
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        w.SetNajblizszeWzwanie();
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
+        String ip = (String) jSpinner1.getValue().toString();
+        int iloscPieter = Integer.parseInt(ip);
+        w.SetIloscPieter(iloscPieter);
+    }//GEN-LAST:event_jSpinner1StateChanged
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        w.Start();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jSpinner6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner6StateChanged
+        String cj = (String) jSpinner6.getValue().toString();
+        int CzasJazdy = Integer.parseInt(cj);
+        w.SetCzasJazdyPietro(CzasJazdy);
+    }//GEN-LAST:event_jSpinner6StateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -666,4 +752,6 @@ public class WindaView extends FrameView {
     private int busyIconIndex = 0;
 
     private JDialog aboutBox;
+
 }
+
