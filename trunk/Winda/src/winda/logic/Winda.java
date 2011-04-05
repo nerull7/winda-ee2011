@@ -82,6 +82,10 @@ public class Winda {
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
     }
 
+    public int GetIloscPieter(){
+        return this.IloscPieter;
+    }
+
     public static void main(String[] args) {
 
         Winda w = new Winda();
