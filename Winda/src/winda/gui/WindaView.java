@@ -15,6 +15,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import winda.logic.Winda;
 
@@ -632,11 +633,21 @@ public class WindaView extends FrameView {
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText(resourceMap.getString("jMenuItem1.text")); // NOI18N
         jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         fileMenu.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText(resourceMap.getString("jMenuItem2.text")); // NOI18N
         jMenuItem2.setName("jMenuItem2"); // NOI18N
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         fileMenu.add(jMenuItem2);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
@@ -667,12 +678,14 @@ public class WindaView extends FrameView {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String st = (String) jSpinner3.getValue().toString();
         String sp = (String) jSpinner4.getValue().toString();
-        String ip = (String) jSpinner5.getValue().toString();
+        
         int start = Integer.parseInt(st);
         int stop = Integer.parseInt(sp);
-        int ilePasazerow = Integer.parseInt(ip);
+        
  
         if(jCheckBox1.isSelected()){
+            String ip = (String) jSpinner5.getValue().toString();
+            int ilePasazerow = Integer.parseInt(ip);
             for(int i = 0; i < ilePasazerow; i++)
                 w.AddPasazer(start, stop);
         }
@@ -725,6 +738,18 @@ public class WindaView extends FrameView {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        if(fc.showOpenDialog(this.mainPanel) == JFileChooser.APPROVE_OPTION)
+            w.WczytajPasazerow(fc.getSelectedFile().getPath());
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        if(fc.showSaveDialog(this.mainPanel) == JFileChooser.APPROVE_OPTION)
+            w.ZapiszPasazerow(fc.getSelectedFile().getPath());
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
