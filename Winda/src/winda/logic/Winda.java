@@ -76,6 +76,10 @@ public class Winda {
         parser.Zapisz(filename, Pasazerowie);
     }
 
+    public void WczytajPasazerow(String filename){
+        this.Pasazerowie = parser.Wczytaj(filename);
+    }
+
     public void Start(){
         AlgorytmWindy.SetMaxPietro(IloscPieter);
         Trasa = AlgorytmWindy.Trasa(Pasazerowie);
