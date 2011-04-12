@@ -6,6 +6,7 @@
 package winda.logic;
 
 import java.util.ArrayList;
+import java.util.List;
 import sun.misc.Sort;
 
 /**
@@ -86,5 +87,9 @@ public class AlgorytmGoraDol implements IAlgorytm {
 
     public void SetMaxPietro(int maxPietro) {
         this.setFloorCount(maxPietro);
+    }
+
+    public List<Pietro> Trasa(List<Pasazer> pasazerowie) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

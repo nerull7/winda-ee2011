@@ -17,12 +17,16 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import winda.animation.ElevatorAnimation;
+import winda.animation.ElevatorMovement;
 import winda.logic.Winda;
 
 /**
  * The application's main frame.
  */
 public class WindaView extends FrameView {
+    private ElevatorMovement em;
+    private ElevatorAnimation ea;
     Winda w = new Winda();
     public WindaView(SingleFrameApplication app) {
         super(app);
@@ -82,6 +86,24 @@ public class WindaView extends FrameView {
                 }
             }
         });
+        this.drawAnimation();
+    }
+
+    private void drawAnimation(){
+        this.em = new ElevatorMovement(12);
+        this.ea = this.em.getElevatorAnimation();
+        this.scrollPane1.add(ea);
+    }
+
+    /**
+     * Not working yet :/
+     * @param floor_count
+     */
+    private void newAnimation(int floor_count){
+        this.scrollPane1.remove(this.ea);
+        this.em.setFloorsCount(floor_count);
+        this.ea = this.em.getElevatorAnimation();
+        this.scrollPane1.add(this.ea);
     }
 
     @Action
@@ -104,7 +126,6 @@ public class WindaView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -148,6 +169,7 @@ public class WindaView extends FrameView {
         jLabel12 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        scrollPane1 = new java.awt.ScrollPane();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -160,8 +182,6 @@ public class WindaView extends FrameView {
         buttonGroup2 = new javax.swing.ButtonGroup();
 
         mainPanel.setName("mainPanel"); // NOI18N
-
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(winda.gui.WindaApp.class).getContext().getResourceMap(WindaView.class);
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
@@ -546,6 +566,8 @@ public class WindaView extends FrameView {
                 .addContainerGap(210, Short.MAX_VALUE))
         );
 
+        scrollPane1.setName("scrollPane1"); // NOI18N
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -564,17 +586,17 @@ public class WindaView extends FrameView {
                                 .addComponent(jButton2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton4)
                                 .addGap(28, 28, 28)
-                                .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE))
+                                .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -614,8 +636,9 @@ public class WindaView extends FrameView {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(10, 10, 10)
+                                .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jButton3)
@@ -784,7 +807,6 @@ public class WindaView extends FrameView {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -803,6 +825,7 @@ public class WindaView extends FrameView {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private java.awt.ScrollPane scrollPane1;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
