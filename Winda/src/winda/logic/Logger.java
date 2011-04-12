@@ -15,9 +15,13 @@ import java.util.List;
  * @author Tomek
  */
 public class Logger {
-    public Logger (Pasazer [] pasazerowie, int [] trasa){
-        //Jeszcze nie jestem pewien argumentów jakie przyjmuje konstruktor
-        //i nie wiem co tak naprawdę jest w trasie
+    public Logger (List<Pietro> trasa){
+        for(Pietro pietro : trasa)
+            for(Pasazer pasazer : pietro.pasazerowieWysiadajacy)
+                log.add("Na Piętrze " + pietro.numerPietra + " wysiadł pasażer " + pasazer.GetName());
+        for(Pietro pietro : trasa)
+            for(Pasazer pasazer : pietro.pasazerowieWsiadający)
+                log.add("Na Piętrze " + pietro.numerPietra + " wsiadł pasażer " + pasazer.GetName());
     }
 
     public void SaveLog(String filename){
