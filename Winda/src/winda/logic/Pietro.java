@@ -5,30 +5,43 @@
 
 package winda.logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Tomek
  */
 public class Pietro {
-    private Pasazer [] pasazerowie;
+    private List<Pasazer> pasazerowie;
+    private int IloscWysiadajacych;
+    private int NumerPietra;
 
-    public Pietro(){
-
+    public Pietro(int numerPietra){
+        this.NumerPietra = numerPietra;
     }
 
-    public Pasazer [] GetPasazerowie(){
+    public int GetIloscWysiadajacych(){
+        return this.IloscWysiadajacych;
+    }
+
+    public void SetIloscWysiadajacych(int iloscWysiadajacych){
+        this.IloscWysiadajacych = iloscWysiadajacych;
+    }
+
+    public List<Pasazer> GetPasazerowie(){
         return this.pasazerowie;
     }
 
-    public void SetPasazerowie(Pasazer [] pasazerowie) {
+    public void SetPasazerowie(List<Pasazer> pasazerowie) {
         this.pasazerowie = pasazerowie;
     }
 
     public void AddPasazer(Pasazer pasazer) {
-        this.pasazerowie[this.pasazerowie.length + 1] = pasazer;
+        this.pasazerowie.add(pasazer);
     }
 
     public void DeletePasazer(Pasazer pasazer) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.pasazerowie.remove(pasazer);
     }
 }
