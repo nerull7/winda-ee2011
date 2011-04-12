@@ -19,8 +19,10 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
 
 
 
-    public int[] Trasa(Pasazer[] pasazerowie){
+
+    public int[][] Trasa2(Pasazer[] pasazerowie){
         int [] t = new int[2*pasazerowie.length+1];
+        int[][] ttt = new int[2*pasazerowie.length+1][3];
         int tab_len = 0;
         int iluPasazerow = 0;
         t[tab_len] = pietroWindy;
@@ -119,11 +121,24 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
             }
 
         }
+    for(i = 0; i < t.length; i++){
+        int ilee=0;
+        while(t[i]==t[i+1]){
+            ilee++;
+        }
+        ttt[i][0] = i;
+        ttt[i][1] = ilee;
+        ttt[i][2] = 1;
+    }
 
-    return t;
+    return ttt;
     }
 
     public void SetMaxPietro(int maxPietro) {
         this.maxPietro = maxPietro;
+    }
+
+    public int[] Trasa(Pasazer[] pasazerowie) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
