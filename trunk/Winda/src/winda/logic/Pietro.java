@@ -14,6 +14,6 @@ import java.util.List;
  */
 public class Pietro {
     public List<Pasazer> pasazerowieWsiadający;
-    public int iloscWysiadajacych;
+    public List<Pasazer> pasazerowieWysiadajacy;
     public int numerPietra;
 }
