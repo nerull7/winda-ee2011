@@ -20,9 +20,8 @@ public class AlgorytmGoraDol implements IAlgorytm {
     private Pasazer[] pasazerowie;
     private int acctual_floor;
 
-    public AlgorytmGoraDol(int floor_count){
+    public AlgorytmGoraDol(){
         this.start_floor = 0;
-        this.floor_count = floor_count;
     }
 
     public AlgorytmGoraDol(int floor_count, int start_floor){
@@ -86,11 +85,6 @@ public class AlgorytmGoraDol implements IAlgorytm {
     }
 
     public void SetMaxPietro(int maxPietro) {
-        this.setFloorCount(floor_count);
+        this.setFloorCount(maxPietro);
     }
-
-    public int[][] Trasa2(Pasazer[] pasazerowie) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
 }
