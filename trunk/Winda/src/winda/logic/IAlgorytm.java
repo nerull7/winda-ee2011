@@ -5,12 +5,13 @@
 
 package winda.logic;
 
+import java.util.List;
+
 /**
  *
  * @author Tomek
  */
 public interface IAlgorytm {
-    public int [] Trasa(Pasazer [] pasazerowie);
-    public int [][]Trasa2(Pasazer [] pasazerowie);
+    public List<Pietro> Trasa(List<Pasazer> pasazerowie);
     public void SetMaxPietro(int maxPietro);
 }
