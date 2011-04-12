@@ -23,16 +23,16 @@ public class Winda {
     private int IloscPasazerow;
     private List<Pasazer> pasazerowieCollection = new ArrayList<Pasazer>();
     private Parser parser = new Parser();
-    private int [] Trasa;
+    private List<Pietro> Trasa;
 
     public Winda(){
         AlgorytmWindy = new AlgorytmGoraDol();
         CzasJazdyPietro = 1;
         CzasWeWyOsoby = 1;
         IloscPieter = 12;
-        Pasazer [] Pasazerowie = parser.Wczytaj("C:\\DemoDane.txt");
-        pasazerowieCollection.addAll(Arrays.asList(Pasazerowie));
-        IloscPasazerow = Pasazerowie.length;
+        AlgorytmWindy.SetMaxPietro(IloscPieter);
+        pasazerowieCollection = parser.Wczytaj("C:\\DemoDane.txt");
+        IloscPasazerow = pasazerowieCollection.size();
     }
 
     public void SetCzasJazdyPietro(double czas){
@@ -55,7 +55,7 @@ public class Winda {
         this.IloscPieter = iloscPieter;
     }
 
-    public void SetNoweProjekt(){
+    public void SetNowyProjekt(){
         this.pasazerowieCollection.clear();
         IloscPasazerow = 0;
     }
@@ -73,27 +73,25 @@ public class Winda {
         return this.CzasSredniObslugi;
     }
 
-    public int [] GetTrasa(){
+    public List<Pietro> GetTrasa(){
         return this.Trasa;
     }
 
     public void ZapiszPasazerow(String filename){
-        Pasazer [] Pasazerowie = pasazerowieCollection.toArray(new Pasazer[0]);
-        parser.Zapisz(filename, Pasazerowie);
+        parser.Zapisz(filename, pasazerowieCollection);
     }
 
     public void WczytajPasazerow(String filename){
         this.pasazerowieCollection.clear();
-        Pasazer [] Pasazerowie = parser.Wczytaj(filename);
-        pasazerowieCollection.addAll(Arrays.asList(Pasazerowie));
-        IloscPasazerow = Pasazerowie.length;
+        pasazerowieCollection = parser.Wczytaj(filename);
+        IloscPasazerow = pasazerowieCollection.size();
     }
 
     public void Start(){
         AlgorytmWindy.SetMaxPietro(IloscPieter);
-        Pasazer [] Pasazerowie = pasazerowieCollection.toArray(new Pasazer[0]);
-        Trasa = AlgorytmWindy.Trasa(Pasazerowie);
-        CzasJazdy = Trasa.length*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
+        Trasa.clear();
+        Trasa = AlgorytmWindy.Trasa(pasazerowieCollection);
+        CzasJazdy = Trasa.size()*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
     }
 
@@ -102,9 +100,9 @@ public class Winda {
         Winda w = new Winda();
         w.SetNajblizszeWzwanie();
         w.Start();
-        int [] trasa = w.GetTrasa();
-        for(int i = 0;i<trasa.length;i++)
-            System.out.print(trasa[i] + " ");
+        List<Pietro> trasa = w.GetTrasa();
+        for(int i = 0;i<trasa.size();i++)
+            System.out.print(trasa.get(i).numerPietra + " ");
         System.out.print('\n');
         System.out.println("Czas jazdy = " + w.GetCzasJazdy());
         System.out.println("Średni czas obsługi jednego pasażera = " + w.GetCzasSredniObslugi());
