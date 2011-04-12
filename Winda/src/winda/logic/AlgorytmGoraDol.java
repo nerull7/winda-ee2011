@@ -89,4 +89,8 @@ public class AlgorytmGoraDol implements IAlgorytm {
         this.setFloorCount(floor_count);
     }
 
+    public int[][] Trasa2(Pasazer[] pasazerowie) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }
