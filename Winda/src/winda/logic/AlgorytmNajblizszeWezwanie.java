@@ -122,10 +122,15 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
 
         }
     for(i = 0; i < t.length; i++){
+        int j;
         int ilee=0;
-        while(t[i]==t[i+1]){
-            ilee++;
+        for(j = 0; j < i; j++){
+            if(t[i]==t[i+1]){
+                ilee++;
+                i++;
+            }
         }
+      
         ttt[i][0] = i;
         ttt[i][1] = ilee;
         ttt[i][2] = 1;
