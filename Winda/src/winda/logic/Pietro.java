@@ -13,7 +13,7 @@ import java.util.List;
  * @author Tomek
  */
 public class Pietro {
-    public List<Pasazer> pasazerowie;
-    public int IloscWysiadajacych;
-    public int NumerPietra;
+    public List<Pasazer> pasazerowieWsiadający;
+    public int iloscWysiadajacych;
+    public int numerPietra;
 }
