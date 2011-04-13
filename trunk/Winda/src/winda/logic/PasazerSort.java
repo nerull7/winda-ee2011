@@ -5,14 +5,16 @@
 
 package winda.logic;
 
+import java.util.List;
+
 /**
  * Sortowanie pasażerów oparta o quicksort
  * @author nerull7
  */
 public class PasazerSort {
-    Pasazer []array;
+    List<Pasazer> array;
 
-    public PasazerSort(Pasazer []array){
+    public PasazerSort(List<Pasazer> array){
         this.array = array;
     }
 
@@ -20,15 +22,15 @@ public class PasazerSort {
         int i,j;
 
         for( i = 1+ (j = start);i<end;i++)
-            if(this.array[i].GetStart()<this.array[start].GetStart()){
-                Pasazer tmp = this.array[++j];
-                this.array[++j] = this.array[i];
-                this.array[i] = tmp;
+            if(this.array.get(i).GetStart()<this.array.get(start).GetStart()){
+                Pasazer tmp = this.array.get(++j);
+                this.array.set(++j, this.array.get(i));
+                this.array.set(i, tmp);
             }
 
-        Pasazer tmp = this.array[start];
-        this.array[start] = this.array[j];
-        this.array[j] = tmp;
+        Pasazer tmp = this.array.get(start);
+        this.array.set(start, this.array.get(j));
+        this.array.set(j, tmp);
         
         return j;
     }
@@ -46,6 +48,6 @@ public class PasazerSort {
      */
 
     public void sortByStart(){
-        this.mksortByStart( 0, this.array.length );
+        this.mksortByStart( 0, this.array.size() );
     }
 }

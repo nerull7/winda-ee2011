@@ -16,7 +16,7 @@ public class AlgorytmGoraDol implements IAlgorytm {
     private int start_floor;
     private int floor_count;
     private ArrayList<Integer> floors;
-    private Pasazer[] pasazerowie;
+    private List<Pasazer> pasazerowie;
     private int acctual_floor;
 
     public AlgorytmGoraDol(){
@@ -57,15 +57,15 @@ public class AlgorytmGoraDol implements IAlgorytm {
     private void goUp(int to){
         int i =0;
         ArrayList<Integer> tmp = new ArrayList<Integer>();
-        while(this.pasazerowie[i].GetStart()<this.acctual_floor)
+        while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
             i++;
-        while(i<this.pasazerowie.length)
-            if( this.pasazerowie[i].GetStart()<this.pasazerowie[i].GetStop()&&
-                this.pasazerowie[i].GetStart()<to){
-                if(tmp.contains(this.pasazerowie[i].GetStart()))
-                    tmp.add(this.pasazerowie[i].GetStart());
-                if(tmp.contains(this.pasazerowie[i].GetStop()))
-                    tmp.add(this.pasazerowie[i].GetStop());
+        while(i<this.pasazerowie.size())
+            if( this.pasazerowie.get(i).GetStart()<this.pasazerowie.get(i).GetStop()&&
+                this.pasazerowie.get(i).GetStart()<to){
+                if(tmp.contains(this.pasazerowie.get(i).GetStart()))
+                    tmp.add(this.pasazerowie.get(i).GetStart());
+                if(tmp.contains(this.pasazerowie.get(i).GetStop()))
+                    tmp.add(this.pasazerowie.get(i).GetStop());
             }
         this.sortUp(tmp);
         this.floors.addAll(tmp);
@@ -82,21 +82,21 @@ public class AlgorytmGoraDol implements IAlgorytm {
     private void goDown(int to){
         int i =0;
         ArrayList<Integer> tmp = new ArrayList<Integer>();
-        while(this.pasazerowie[i].GetStart()<this.acctual_floor)
+        while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
             i++;
-        while(i<this.pasazerowie.length)
-            if( this.pasazerowie[i].GetStart()>this.pasazerowie[i].GetStop()&&
-                this.pasazerowie[i].GetStart()>to){
-                if(tmp.contains(this.pasazerowie[i].GetStart()))
-                    tmp.add(this.pasazerowie[i].GetStart());
-                if(tmp.contains(this.pasazerowie[i].GetStop()))
-                    tmp.add(this.pasazerowie[i].GetStop());
+        while(i<this.pasazerowie.size())
+            if( this.pasazerowie.get(i).GetStart()>this.pasazerowie.get(i).GetStop()&&
+                this.pasazerowie.get(i).GetStart()>to){
+                if(tmp.contains(this.pasazerowie.get(i).GetStart()))
+                    tmp.add(this.pasazerowie.get(i).GetStart());
+                if(tmp.contains(this.pasazerowie.get(i).GetStop()))
+                    tmp.add(this.pasazerowie.get(i).GetStop());
             }
         tmp = this.sortDown(tmp);
         this.floors.addAll(tmp);
     }
 
-    public int[] setCourse(){
+    public List<Pietro> setCourse(){
         this.floors = new ArrayList<Integer>();
         floors.add(this.start_floor);
 
@@ -124,7 +124,7 @@ public class AlgorytmGoraDol implements IAlgorytm {
         return ret;
     }
 
-    public int[] Trasa(Pasazer[] pasazerowie) {
+    public List<Pietro> Trasa(List<Pasazer> pasazerowie) {
         this.pasazerowie = pasazerowie;
         return this.setCourse();
     }
@@ -132,9 +132,4 @@ public class AlgorytmGoraDol implements IAlgorytm {
     public void SetMaxPietro(int maxPietro) {
         this.setFloorCount(floor_count);
     }
-
-    public List<Pietro> Trasa(List<Pasazer> pasazerowie) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
 }
