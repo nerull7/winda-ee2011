@@ -5,6 +5,7 @@
 
 package winda.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Tomek
  */
 public class Pietro {
-    public List<Pasazer> pasazerowieWsiadający;
-    public List<Pasazer> pasazerowieWysiadajacy;
+    public List<Pasazer> pasazerowieWsiadający = new ArrayList();
+    public List<Pasazer> pasazerowieWysiadajacy = new ArrayList();
     public int numerPietra;
 }

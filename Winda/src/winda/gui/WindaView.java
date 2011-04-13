@@ -17,8 +17,9 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import winda.animation.ElevatorAnimation;
 import winda.animation.ElevatorMovement;
+import winda.logic.Pasazer;
+import winda.logic.Pietro;
 import winda.logic.Winda;
 
 /**
@@ -26,7 +27,6 @@ import winda.logic.Winda;
  */
 public class WindaView extends FrameView {
     private ElevatorMovement em;
-    private ElevatorAnimation ea;
     Winda w = new Winda();
     public WindaView(SingleFrameApplication app) {
         super(app);
@@ -91,19 +91,15 @@ public class WindaView extends FrameView {
 
     private void drawAnimation(){
         this.em = new ElevatorMovement(12);
-        this.ea = this.em.getElevatorAnimation();
-        this.scrollPane1.add(ea);
+        this.scrollPane1.add(em.getElevatorAnimation());
     }
 
-    /**
-     * Not working yet :/
-     * @param floor_count
-     */
     private void newAnimation(int floor_count){
-        this.scrollPane1.remove(this.ea);
+        this.scrollPane1.remove(this.em.getElevatorAnimation());
         this.em.setFloorsCount(floor_count);
-        this.ea = this.em.getElevatorAnimation();
-        this.scrollPane1.add(this.ea);
+        this.scrollPane1.add(this.em.getElevatorAnimation());
+        this.scrollPane1.doLayout();
+        this.scrollPane1.repaint();
     }
 
     @Action
@@ -510,6 +506,11 @@ public class WindaView extends FrameView {
         jButton4.setName("jButton4"); // NOI18N
 
         jSlider1.setName("jSlider1"); // NOI18N
+        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider1StateChanged(evt);
+            }
+        });
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setName("jPanel5"); // NOI18N
@@ -733,6 +734,7 @@ public class WindaView extends FrameView {
         String ip = (String) jSpinner1.getValue().toString();
         int iloscPieter = Integer.parseInt(ip);
         w.SetIloscPieter(iloscPieter);
+        this.newAnimation(iloscPieter);
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -756,6 +758,12 @@ public class WindaView extends FrameView {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Pietro p = new Pietro();
+        p.numerPietra = 2;
+        p.pasazerowieWsiadający.add(new Pasazer(0,2,2));
+        this.em.setPassangersOnFloor(2, 1);
+        em.setTimeForFloor(1000);
+        this.em.goToFloor(p);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -773,6 +781,11 @@ public class WindaView extends FrameView {
         if(fc.showSaveDialog(this.mainPanel) == JFileChooser.APPROVE_OPTION)
             w.ZapiszPasazerow(fc.getSelectedFile().getPath());
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+        this.em.setSpeed(this.jSlider1.getValue());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSlider1StateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -825,7 +838,7 @@ public class WindaView extends FrameView {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
-    private java.awt.ScrollPane scrollPane1;
+    public transient java.awt.ScrollPane scrollPane1;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;

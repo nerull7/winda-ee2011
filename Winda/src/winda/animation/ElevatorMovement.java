@@ -1,16 +1,16 @@
 package winda.animation;
 
+import java.awt.ScrollPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import winda.gui.WindaApp;
+import winda.logic.Pietro;
 
 /**
  *
  * @author Przemo
  */
-public class ElevatorMovement {
-//    private final int FPS = 50; /* Frames Per Second */
-//    private final int THREAD_WAIT_TIME = 1000/this.FPS;
-
+public class ElevatorMovement  {
     private ElevatorAnimation ea;
 
     private int floor_count;
@@ -18,26 +18,32 @@ public class ElevatorMovement {
     private int time_for_floor; // Tymczasowo /* Miliseconds */
     private int actual_floor;
     private double jump_time;
+    private double speed;
+    private int enter_exit_time;
 
     public ElevatorMovement(int floor_count){
         this.floor_count = floor_count;
         this.init();
     }
 
-    public void goToFloor(int number){
-        if(this.actual_floor<number)
-            this.goUp(number);
-        else if(this.actual_floor>number)
-            this.goDown(number);
-        this.actual_floor = number;
+    public void goToFloor(Pietro pietro){
+        if(this.actual_floor<pietro.numerPietra)
+            this.goUp(pietro.numerPietra);
+        else if(this.actual_floor>pietro.numerPietra)
+            this.goDown(pietro.numerPietra);
+        this.actual_floor = pietro.numerPietra;
+
+        this.exitElevator(pietro.pasazerowieWysiadajacy.size());
+        this.enterElevator(pietro.pasazerowieWsiadający.size(), pietro.numerPietra);
     }
 
     private void goUp(int number){
+        System.out.println(""+(this.jump_time*this.speed));
         while(this.ea.shift>(this.floor_size*(this.floor_count-(number+1)))){
             try {
                 this.ea.shift--;
                 this.ea.repaint();
-                Thread.sleep((long) jump_time);
+                Thread.sleep((long) (this.jump_time*this.speed));
             } catch (InterruptedException ex) {
                 Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -49,10 +55,33 @@ public class ElevatorMovement {
             try {
                 this.ea.shift++;
                 this.ea.repaint();
-                Thread.sleep((long) jump_time);
+                Thread.sleep((long) (this.jump_time));
             } catch (InterruptedException ex) {
                 Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    private void exitElevator(int number){
+        for(int i=0;i<number;i++){
+            try {
+                Thread.sleep((long) (this.enter_exit_time*this.speed));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.ea.elevator_passangers--;
+        }
+    }
+
+    private void enterElevator(int number, int floor){
+        for(int i=0;i<number;i++){
+            try {
+                Thread.sleep((long) (this.enter_exit_time*this.speed));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.ea.elevator_passangers++;
+            this.ea.floor_passangers[floor]--;
         }
     }
 
@@ -84,12 +113,23 @@ public class ElevatorMovement {
         return this.ea.floor_passangers[floor];
     }
 
-    public int getSpeed(){
-        return this.time_for_floor;
+    public void setTimeForFloor(int time){
+        this.time_for_floor = time;
+        this.jump_time = ((double)time)/((double)(this.floor_size));
+    }
+
+    public double getSpeed(){
+        return this.speed;
     }
 
     public void setSpeed(int speed){
-        this.time_for_floor = speed;
+        if(speed == 50)
+            this.speed = 1;
+        else if(speed <50){
+            this.speed = (((double)speed+50)/2)/100;
+        }
+        else
+            this.speed = (((double)speed+50)*2)/100;
     }
 
     public void setFloorsCount(int floors){
@@ -97,11 +137,17 @@ public class ElevatorMovement {
         this.init();
     }
 
+    public void setEnterExitTime(int time){
+        this.enter_exit_time = time;
+    }
+
     private void init(){
         this.time_for_floor = 1000;
         this.actual_floor = 0;
-        ea = new ElevatorAnimation(this.floor_count);
-        ea.shift = this.floor_size * (this.floor_count-1);
+        this.ea = new ElevatorAnimation(this.floor_count);
+        this.ea.shift = this.floor_size * (this.floor_count-1);
         this.jump_time = ((double)this.time_for_floor)/((double)(this.floor_size));
+        this.speed = 1;
     }
+
 }
