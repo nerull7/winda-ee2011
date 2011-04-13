@@ -48,6 +48,6 @@ public class PasazerSort {
      */
 
     public void sortByStart(){
-        this.mksortByStart( 0, this.array.size() );
+        this.mksortByStart( 0, this.array.size()-1 );
     }
 }

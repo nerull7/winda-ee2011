@@ -31,6 +31,7 @@ import winda.logic.Winda;
 public class WindaView extends FrameView{
     private ElevatorMovement em;
     Winda w = new Winda();
+    private int floor_count =12;
     public WindaView(SingleFrameApplication app) {
         super(app);
 
@@ -94,6 +95,23 @@ public class WindaView extends FrameView{
         t.start();
         this.drawAnimation();
         
+    }
+    
+    private void setupAnimation(){
+        int []passangers = new int[this.floor_count];
+        for(int i=0;i<this.floor_count;i++)
+            passangers[i] = w.GetTrasa().get(i).pasazerowieWsiadający.size();
+                    
+        this.em.setPassangersOnFloors(passangers);
+        
+    }
+
+    private void goToPieto(){
+        for(int i=0;i<this.w.GetTrasa().size();i++){
+            this.em.setPietro(this.w.GetTrasa().get(i));
+            Thread t = new Thread(em);
+            t.start();
+        }
     }
 
     private void drawAnimation(){
@@ -742,11 +760,14 @@ public class WindaView extends FrameView{
         int iloscPieter = Integer.parseInt(ip);
         w.SetIloscPieter(iloscPieter);
         this.newAnimation(iloscPieter);
+        this.floor_count = iloscPieter;
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         w.Start();
         jTextField1.setText(Double.toString(w.GetCzasJazdy()));
+        this.setupAnimation();
+        this.goToPieto();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jSpinner6StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner6StateChanged
@@ -770,10 +791,6 @@ public class WindaView extends FrameView{
         p.pasazerowieWsiadający.add(new Pasazer(0,2,2));
         this.em.setPassangersOnFloor(2, 1);
         em.setTimeForFloor(1000);
-
-        this.em.setPietro(p);
-        Thread t = new Thread(em);
-        t.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
