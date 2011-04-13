@@ -15,7 +15,7 @@ import sun.misc.Sort;
 public class AlgorytmGoraDol implements IAlgorytm {
     private int start_floor;
     private int floor_count;
-    private ArrayList<Integer> floors;
+    private ArrayList<Pietro> floors;
     private List<Pasazer> pasazerowie;
     private int acctual_floor;
 
@@ -50,78 +50,51 @@ public class AlgorytmGoraDol implements IAlgorytm {
         return this.floor_count;
     }
 
-    private void sortUp(ArrayList<Integer> array){
-        Sort.quicksort(array.toArray(), null);
-    }
-
-    private void goUp(int to){
+    private void goUp(){
         int i =0;
-        ArrayList<Integer> tmp = new ArrayList<Integer>();
+        ArrayList<Pietro> pietra = this.setupPietra();
         while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
             i++;
         while(i<this.pasazerowie.size())
-            if( this.pasazerowie.get(i).GetStart()<this.pasazerowie.get(i).GetStop()&&
-                this.pasazerowie.get(i).GetStart()<to){
-                if(tmp.contains(this.pasazerowie.get(i).GetStart()))
-                    tmp.add(this.pasazerowie.get(i).GetStart());
-                if(tmp.contains(this.pasazerowie.get(i).GetStop()))
-                    tmp.add(this.pasazerowie.get(i).GetStop());
+            if( this.pasazerowie.get(i).GetStart()<this.pasazerowie.get(i).GetStop()){
+                pietra.get(this.pasazerowie.get(i).GetStart()).pasazerowieWsiadający.add(this.pasazerowie.get(i));
+                pietra.get(this.pasazerowie.get(i).GetStop()).pasazerowieWysiadajacy.add(this.pasazerowie.get(i));
             }
-        this.sortUp(tmp);
-        this.floors.addAll(tmp);
-    }
-    
-    private ArrayList<Integer> sortDown(ArrayList<Integer> array){
-        Sort.quicksort(array.toArray(), null);
-        ArrayList<Integer> tmp = new ArrayList();
-        for(int i= (array.size()-1);i>=0;i--)
-            tmp.add(array.get(i));
-        return tmp;
+        this.clearPietra(pietra);
+        this.floors.addAll(pietra);
     }
 
-    private void goDown(int to){
+    private void goDown(){
         int i =0;
-        ArrayList<Integer> tmp = new ArrayList<Integer>();
+        ArrayList<Pietro> pietra = this.setupPietra();
         while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
             i++;
         while(i<this.pasazerowie.size())
-            if( this.pasazerowie.get(i).GetStart()>this.pasazerowie.get(i).GetStop()&&
-                this.pasazerowie.get(i).GetStart()>to){
-                if(tmp.contains(this.pasazerowie.get(i).GetStart()))
-                    tmp.add(this.pasazerowie.get(i).GetStart());
-                if(tmp.contains(this.pasazerowie.get(i).GetStop()))
-                    tmp.add(this.pasazerowie.get(i).GetStop());
+            if( this.pasazerowie.get(i).GetStart()>this.pasazerowie.get(i).GetStop()){
+                pietra.get(this.pasazerowie.get(i).GetStart()).pasazerowieWsiadający.add(this.pasazerowie.get(i));
+                pietra.get(this.pasazerowie.get(i).GetStop()).pasazerowieWysiadajacy.add(this.pasazerowie.get(i));
             }
-        tmp = this.sortDown(tmp);
-        this.floors.addAll(tmp);
+        this.clearPietra(pietra);
+        this.floors.addAll(pietra);
+    }
+
+    private void clearPietra(ArrayList<Pietro> pietro){
+        Pietro tmp;
+        for(int i=0;i<pietro.size();i++){
+            tmp=pietro.get(i);
+            if(tmp.pasazerowieWsiadający.isEmpty() && tmp.pasazerowieWysiadajacy.isEmpty())
+                pietro.remove(i);
+        }
     }
 
     public List<Pietro> setCourse(){
-        this.floors = new ArrayList<Integer>();
-        floors.add(this.start_floor);
-
         PasazerSort sort = new PasazerSort(pasazerowie);
         sort.sortByStart();
         this.acctual_floor = this.start_floor;
         
-        /* Jeżeli winda jest poniżej połowy */
-        if((this.floor_count/2)>this.acctual_floor){
-            this.goDown(0);
-            this.goUp(this.floor_count);
-            this.goDown(this.start_floor);
-        }
-        else{
-            this.goUp(0);
-            this.goDown(this.floor_count);
-            this.goUp(this.start_floor);
-        }
-
-
-
-        int []ret = new int[floors.size()];
-        for(int i=0;i<floors.size();i++)
-            ret[i] = floors.get(i).intValue();
-        return ret;
+        this.goUp();
+        this.goDown();
+        return this.floors;
     }
 
     public List<Pietro> Trasa(List<Pasazer> pasazerowie) {
@@ -131,5 +104,15 @@ public class AlgorytmGoraDol implements IAlgorytm {
 
     public void SetMaxPietro(int maxPietro) {
         this.setFloorCount(floor_count);
+    }
+
+    private ArrayList<Pietro> setupPietra(){
+        ArrayList<Pietro> pietra = new ArrayList();
+        for(int i=0;i<this.floor_count;i++){
+            Pietro tmp = new Pietro();
+            tmp.numerPietra = i;
+            pietra.add(tmp);
+        }
+        return pietra;
     }
 }
