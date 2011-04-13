@@ -53,7 +53,7 @@ public class ElevatorAnimation extends JApplet {
     }
 
     /*
-     * Buforowana klatka
+     * Buforowana klatki
      */
     private BufferedImage buffImage(){
         BufferedImage buffi = new BufferedImage(this.x_dimension, this.y_dmension, BufferedImage.TYPE_BYTE_GRAY);
