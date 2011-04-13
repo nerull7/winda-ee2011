@@ -4,6 +4,9 @@
 
 package winda.gui;
 
+import java.awt.ScrollPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -25,7 +28,7 @@ import winda.logic.Winda;
 /**
  * The application's main frame.
  */
-public class WindaView extends FrameView {
+public class WindaView extends FrameView{
     private ElevatorMovement em;
     Winda w = new Winda();
     public WindaView(SingleFrameApplication app) {
@@ -86,7 +89,11 @@ public class WindaView extends FrameView {
                 }
             }
         });
+        Refresh r = new Refresh(this.scrollPane1);
+        Thread t = new Thread(r);
+        t.start();
         this.drawAnimation();
+        
     }
 
     private void drawAnimation(){
@@ -230,8 +237,8 @@ public class WindaView extends FrameView {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                 .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
@@ -318,7 +325,7 @@ public class WindaView extends FrameView {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                                 .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -326,13 +333,13 @@ public class WindaView extends FrameView {
                                 .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(28, 28, 28)))
                 .addGap(56, 56, 56))
-            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton5)
                 .addGap(18, 18, 18)
                 .addComponent(jButton6)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,7 +362,7 @@ public class WindaView extends FrameView {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jSpinner5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton6))
@@ -396,12 +403,12 @@ public class WindaView extends FrameView {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLabel7)
-                .addContainerGap(53, Short.MAX_VALUE))
-            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addContainerGap(65, Short.MAX_VALUE))
+            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jRadioButton1)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jRadioButton2)
@@ -466,7 +473,7 @@ public class WindaView extends FrameView {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator6, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                            .addComponent(jSeparator6, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                             .addComponent(jLabel9)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
@@ -537,7 +544,7 @@ public class WindaView extends FrameView {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addComponent(jLabel11))
@@ -564,7 +571,7 @@ public class WindaView extends FrameView {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13)
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         scrollPane1.setName("scrollPane1"); // NOI18N
@@ -578,7 +585,7 @@ public class WindaView extends FrameView {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, 0, 198, Short.MAX_VALUE)
+                            .addComponent(jPanel2, 0, 219, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(mainPanelLayout.createSequentialGroup()
@@ -594,7 +601,7 @@ public class WindaView extends FrameView {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton4)
                                 .addGap(28, 28, 28)
-                                .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
+                                .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -619,7 +626,7 @@ public class WindaView extends FrameView {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabel1)
@@ -645,7 +652,7 @@ public class WindaView extends FrameView {
                                         .addComponent(jButton3)
                                         .addComponent(jButton4))
                                     .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))))
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -763,7 +770,10 @@ public class WindaView extends FrameView {
         p.pasazerowieWsiadający.add(new Pasazer(0,2,2));
         this.em.setPassangersOnFloor(2, 1);
         em.setTimeForFloor(1000);
-        this.em.goToFloor(p);
+
+        this.em.setPietro(p);
+        Thread t = new Thread(em);
+        t.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -849,5 +859,29 @@ public class WindaView extends FrameView {
 
     private JDialog aboutBox;
 
+
+
+}
+
+class Refresh extends Thread{
+    public Refresh(ScrollPane sc){
+            this.scrollPane = sc;
+    }
+
+    ScrollPane scrollPane;
+
+    @Override
+    public void run(){
+
+        while(true){
+            try {
+                sleep(20);
+                this.scrollPane.repaint();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Refresh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
 }
 

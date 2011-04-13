@@ -10,7 +10,7 @@ import winda.logic.Pietro;
  *
  * @author Przemo
  */
-public class ElevatorMovement  {
+public class ElevatorMovement extends Thread{
     private ElevatorAnimation ea;
 
     private int floor_count;
@@ -20,6 +20,13 @@ public class ElevatorMovement  {
     private double jump_time;
     private double speed;
     private int enter_exit_time;
+
+    private Pietro pietro;
+
+    @Override
+    public void run(){
+        this.goToFloor(this.pietro);
+    }
 
     public ElevatorMovement(int floor_count){
         this.floor_count = floor_count;
@@ -148,6 +155,10 @@ public class ElevatorMovement  {
         this.ea.shift = this.floor_size * (this.floor_count-1);
         this.jump_time = ((double)this.time_for_floor)/((double)(this.floor_size));
         this.speed = 1;
+    }
+
+    public void setPietro(Pietro pietro){
+        this.pietro = pietro;
     }
 
 }
