@@ -31,8 +31,9 @@ public class Winda {
         CzasWeWyOsoby = 1;
         IloscPieter = 12;
         AlgorytmWindy.SetMaxPietro(IloscPieter);
-        pasazerowieCollection = parser.Wczytaj("/crypt/przemo/Dropbox/winda-ee2011/Winda/DemoDane.txt");
+        pasazerowieCollection = parser.Wczytaj("c:\\DemoDane.txt");
         IloscPasazerow = pasazerowieCollection.size();
+        this.Trasa = new ArrayList();
     }
 
     public void SetCzasJazdyPietro(double czas){
