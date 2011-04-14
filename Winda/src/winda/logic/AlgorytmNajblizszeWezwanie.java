@@ -12,6 +12,12 @@ import java.util.List;
  *
  * @author Tomek
  */
+/*
+ * Nie wiem czemu to gówno nie chce działać!
+ * 
+ *
+ */
+
 public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
     int pietroWindy = 0;
     int maxPietro=11;
@@ -60,28 +66,33 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                         }
                     }
                     pas_tmp.add(pasazerowie.get(j));
-                    
+                    is = true;
                 }
             }
-            
-            pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
-            trasa.add(licznik,pietro); licznik++;
-            i++;
-            for(int k = 0; k < pas_tmp.size()-1; k++){
-                        pietro2.numerPietra = pas_tmp.get(k).GetStop();
-                        //System.out.println("L:"+pietro2.numerPietra);
-                        pietro2.pasazerowieWysiadajacy.add(pas_tmp.get(k));
-                        trasa.add(licznik,pietro2); licznik++;
-                        i++;
+            if(is){
+                pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
+                trasa.add(pietro);
+                pietro.pasazerowieWsiadający.clear();
+                pietro.pasazerowieWysiadajacy.clear();
+                i++;
+                is = false;
             }
-            
+            for(int k = 0; k < pas_tmp.size()-1; k++){
+                pietro.numerPietra = pas_tmp.get(k).GetStop();
+                pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
+                trasa.add(pietro);
+                pietro.pasazerowieWsiadający.clear();
+                pietro.pasazerowieWysiadajacy.clear();
+                i++;
+            }
+            pas_tmp.clear();
             
 
             for(int m = 0; m < maxPietro; m++){
                 if(pietroWindy + m <= maxPietro){
                     for(int n = 0; n < pasazerowie.size(); n++){
                         if(pietroWindy + m == pasazerowie.get(n).GetStart()){
-                            if(n==0){
+                            if(n == 0){
                                 pietro.numerPietra = pietroWindy+m;
                             }
                             //is = true;
@@ -96,18 +107,29 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                                 }
                             }
                             pas_tmp.add(pasazerowie.get(n));
+                            is = true;
+                            dodano = true;
                         }
                     }
-                    pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
-                    trasa.add(licznik,pietro); licznik++;
-                    i++;
+                    if(is){
+                        pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
+                        trasa.add(pietro);
+                        pietro.pasazerowieWsiadający.clear();
+                        pietro.pasazerowieWysiadajacy.clear();
+                        i++;
+                        is = false;
+                    }
+                    
                     for(int k = 0; k < pas_tmp.size()-1; k++){
-                                pietro2.numerPietra = pas_tmp.get(k).GetStop();
+                                pietro.numerPietra = pas_tmp.get(k).GetStop();
                                 //System.out.println("L:"+pietro2.numerPietra);
-                                pietro2.pasazerowieWysiadajacy.add(pas_tmp.get(k));
-                                trasa.add(licznik,pietro2); licznik++;
+                                pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
+                                trasa.add(pietro);
+                                pietro.pasazerowieWsiadający.clear();
+                                pietro.pasazerowieWysiadajacy.clear();
                                 i++;
                     }
+                    pas_tmp.clear();
                 }
                 if(dodano) break;
 
@@ -129,25 +151,34 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                                 }
                             }
                             pas_tmp.add(pasazerowie.get(n));
-                            
+                            is = true;
+                            dodano = true;
                         }
                     }
-                    pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
-                    trasa.add(licznik,pietro); licznik++;
-                    i++;
+                    if(is){
+                        pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
+                        trasa.add(pietro);
+                        pietro.pasazerowieWsiadający.clear();
+                        pietro.pasazerowieWysiadajacy.clear();
+                        i++;
+                        is = false;
+                    }
+                    
                     for(int k = 0; k < pas_tmp.size()-1; k++){
-                                pietro2.numerPietra = pas_tmp.get(k).GetStop();
+                                pietro.numerPietra = pas_tmp.get(k).GetStop();
                                 //System.out.println("L:"+pietro2.numerPietra);
-                                pietro2.pasazerowieWysiadajacy.add(pas_tmp.get(k));
-                                trasa.add(licznik,pietro2); licznik++;
+                                pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
+                                trasa.add(pietro);
+                                pietro.pasazerowieWsiadający.clear();
+                                pietro.pasazerowieWsiadający.clear();
                                 i++;
                     }
+                    pas_tmp.clear();
                 }
                 if(dodano) break;
 
             }
-            
-            
+
             
     }
     
@@ -160,7 +191,7 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
     }
 
     public static void main(String[] args) {
-        Pasazer p1 = new Pasazer(1,2,6);
+        Pasazer p1 = new Pasazer(1,0,6);
         Pasazer p2 = new Pasazer(2,9,1);
         Pasazer p3 = new Pasazer(3,0,6);
         Pasazer p4 = new Pasazer(4,6,1);
