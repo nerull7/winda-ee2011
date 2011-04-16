@@ -72,8 +72,7 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
             if(is){
                 pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
                 trasa.add(pietro);
-                pietro.pasazerowieWsiadający.clear();
-                pietro.pasazerowieWysiadajacy.clear();
+                pietro = new Pietro();
                 i++;
                 is = false;
             }
@@ -81,8 +80,7 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                 pietro.numerPietra = pas_tmp.get(k).GetStop();
                 pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
                 trasa.add(pietro);
-                pietro.pasazerowieWsiadający.clear();
-                pietro.pasazerowieWysiadajacy.clear();
+                pietro = new Pietro();
                 i++;
             }
             pas_tmp.clear();
@@ -114,8 +112,7 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                     if(is){
                         pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
                         trasa.add(pietro);
-                        pietro.pasazerowieWsiadający.clear();
-                        pietro.pasazerowieWysiadajacy.clear();
+                        pietro = new Pietro();
                         i++;
                         is = false;
                     }
@@ -125,8 +122,7 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                                 //System.out.println("L:"+pietro2.numerPietra);
                                 pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
                                 trasa.add(pietro);
-                                pietro.pasazerowieWsiadający.clear();
-                                pietro.pasazerowieWysiadajacy.clear();
+                                pietro = new Pietro();
                                 i++;
                     }
                     pas_tmp.clear();
@@ -158,8 +154,7 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                     if(is){
                         pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
                         trasa.add(pietro);
-                        pietro.pasazerowieWsiadający.clear();
-                        pietro.pasazerowieWysiadajacy.clear();
+                        pietro = new Pietro();
                         i++;
                         is = false;
                     }
@@ -169,8 +164,7 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
                                 //System.out.println("L:"+pietro2.numerPietra);
                                 pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
                                 trasa.add(pietro);
-                                pietro.pasazerowieWsiadający.clear();
-                                pietro.pasazerowieWsiadający.clear();
+                                pietro = new Pietro();
                                 i++;
                     }
                     pas_tmp.clear();
