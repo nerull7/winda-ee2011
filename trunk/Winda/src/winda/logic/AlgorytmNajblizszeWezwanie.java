@@ -12,215 +12,93 @@ import java.util.List;
  *
  * @author Tomek
  */
-/*
- * Nie wiem czemu to gówno nie chce działać!
- * 
- *
- */
 
 public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
-    int pietroWindy = 0;
-    int maxPietro=11;
-    int minPietro = 0;
-    int stop = 0;
-    int start = 0;
-    int NpietroWindy = 0;
-    Pasazer p = new Pasazer(-1,-1,-1);
+    private int aktualnePietro = 0;
+    private int maxPietro;
+    private boolean kierunekJazdy = true; //true - gora, false - dol
+    private List<Pasazer> pasazerowie;
+    private List<Pasazer> pozostaliPasazerowie = new ArrayList<Pasazer>();
+    private List<Pietro> trasa = new ArrayList<Pietro>();
 
+    public List<Pietro> Trasa(List<Pasazer> pasazerowie) {
+        this.pasazerowie = pasazerowie;
+        for (Pasazer p : pasazerowie)
+            this.pozostaliPasazerowie.add(new Pasazer(p.GetName(), p.GetStart(), p.GetStop()));
 
-    public List<Pietro> Trasa(List<Pasazer> pasazerowie){
-        
-        List<Pietro> trasa = new ArrayList();
-        int licznik = 0;
-        //List<Pasazer> pas_tmp = new ArrayList();
-        int zmiana = 0;
-        
-        int i = 0;
-        Pietro pietro = new Pietro();
-        
+        while (this.pozostaliPasazerowie.size() > 0) {
+            Pietro pietro = new Pietro();
+            pietro.numerPietra = this.aktualnePietro;
+            List<Pasazer> tmpPasazerowie = new ArrayList<Pasazer>();
 
-        int ile = 0;
-        while(i < pasazerowie.size()){
+            for(Pasazer p : this.pasazerowie)
+                for(Pasazer pp : this.pozostaliPasazerowie)
+                    if(p.GetName() == pp.GetName() && p.GetStart() == this.aktualnePietro)
+                        tmpPasazerowie.add(p);
 
-            Pietro pietro2 = new Pietro();
-            Pietro []pietro3 = new Pietro[12];
-            List<Pietro> pietro_tmp= new ArrayList();
-            List<Pasazer> pas_tmp = new ArrayList();
-            boolean dodano = false;
-            boolean is = false;
-            ile=0;
-            for(int j = 0; j < pasazerowie.size(); j++){
-                if(pietroWindy == pasazerowie.get(j).GetStart()){
-                    if(j==0){
-                        pietro.numerPietra = pietroWindy;
-                    }
-                    //is = true;
-                    pietro.pasazerowieWsiadający.add(pasazerowie.get(j));
-                    //pietro.pasazerowieWysiadajacy.add(p);
-                    for(int k = 0; k < trasa.size(); k++){
-                        for(int l = 0; l < trasa.get(k).pasazerowieWysiadajacy.size();l++){
-                            if(pietro.numerPietra == trasa.get(k).pasazerowieWysiadajacy.get(l).GetStop()){
-                                pietro.pasazerowieWysiadajacy.add(trasa.get(k).pasazerowieWysiadajacy.get(l));
-                                trasa.get(k).pasazerowieWysiadajacy.get(l).SetStop(-1);
-                            }
+            pietro.pasazerowieWsiadający = tmpPasazerowie;
+
+            tmpPasazerowie = new ArrayList<Pasazer>();
+            List<Pasazer> doUsuniecia = new ArrayList<Pasazer>();
+            for(Pietro p : this.trasa)
+                for(Pasazer pasazer : p.pasazerowieWsiadający)
+                    for(Pasazer pp : this.pozostaliPasazerowie)
+                        if(pasazer.GetName() == pp.GetName() && pasazer.GetStop() == this.aktualnePietro) {
+                            tmpPasazerowie.add(pasazer);
+                            doUsuniecia.add(pp);
                         }
-                    }
-                    pas_tmp.add(pasazerowie.get(j));
-                    is = true;
-                }
-            }
-            if(is){
-                pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
-                trasa.add(pietro);
-                pietro = new Pietro();
-                i++;
-                is = false;
-            }
-            for(int k = 0; k < pas_tmp.size()-1; k++){
-                pietro.numerPietra = pas_tmp.get(k).GetStop();
-                pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
-                trasa.add(pietro);
-                pietro = new Pietro();
-                i++;
-            }
-            pas_tmp.clear();
-            
 
-            for(int m = 0; m < maxPietro; m++){
-                if(pietroWindy + m <= maxPietro){
-                    for(int n = 0; n < pasazerowie.size(); n++){
-                        if(pietroWindy + m == pasazerowie.get(n).GetStart()){
-                            if(n == 0){
-                                pietro.numerPietra = pietroWindy+m;
-                            }
-                            //is = true;
-                            pietro.pasazerowieWsiadający.add(pasazerowie.get(n));
-                            //pietro.pasazerowieWysiadajacy.add(p);
-                            for(int k = 0; k < trasa.size(); k++){
-                                for(int l = 0; l < trasa.get(k).pasazerowieWysiadajacy.size();l++){
-                                    if(pietro.numerPietra == trasa.get(k).pasazerowieWysiadajacy.get(l).GetStop()){
-                                        pietro.pasazerowieWysiadajacy.add(trasa.get(k).pasazerowieWysiadajacy.get(l));
-                                        trasa.get(k).pasazerowieWysiadajacy.get(l).SetStop(-1);
-                                    }
-                                }
-                            }
-                            pas_tmp.add(pasazerowie.get(n));
-                            is = true;
-                            dodano = true;
+            pietro.pasazerowieWysiadajacy = tmpPasazerowie;
+            this.pozostaliPasazerowie.removeAll(doUsuniecia);
+            this.trasa.add(pietro);
+            int nastepnePietro;
+            boolean pustaWinda = true;
+            if(this.kierunekJazdy)
+                nastepnePietro = this.maxPietro;
+            else
+                nastepnePietro = 0;
+            for(Pietro p : this.trasa)
+                for(Pasazer pasazer : p.pasazerowieWsiadający)
+                    for(Pasazer pp : this.pozostaliPasazerowie)
+                        if(pasazer.GetName() == pp.GetName()){
+                            pustaWinda = false;
+                            if(this.kierunekJazdy && pasazer.GetStop() > this.aktualnePietro && pasazer.GetStop() < nastepnePietro)
+                                nastepnePietro = pasazer.GetStop();
+                            else if(!this.kierunekJazdy && pasazer.GetStop() < this.aktualnePietro && pasazer.GetStop() > nastepnePietro)
+                                nastepnePietro = pasazer.GetStop();
                         }
-                    }
-                    if(is){
-                        pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
-                        trasa.add(pietro);
-                        pietro = new Pietro();
-                        i++;
-                        is = false;
-                    }
-                    
-                    for(int k = 0; k < pas_tmp.size()-1; k++){
-                                pietro.numerPietra = pas_tmp.get(k).GetStop();
-                                //System.out.println("L:"+pietro2.numerPietra);
-                                pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
-                                trasa.add(pietro);
-                                pietro = new Pietro();
-                                i++;
-                    }
-                    pas_tmp.clear();
-                }
-                if(dodano) break;
 
-                if(pietroWindy - m >= minPietro){
-                    for(int n = 0; n < pasazerowie.size(); n++){
-                        if(pietroWindy - m == pasazerowie.get(n).GetStart()){
-                            if(n==0){
-                                pietro.numerPietra = pietroWindy-m;
-                            }
-                            //is = true;
-                            pietro.pasazerowieWsiadający.add(pasazerowie.get(n));
-                            //pietro.pasazerowieWysiadajacy.add(p);
-                            for(int k = 0; k < trasa.size(); k++){
-                                for(int l = 0; l < trasa.get(k).pasazerowieWysiadajacy.size();l++){
-                                    if(pietro.numerPietra == trasa.get(k).pasazerowieWysiadajacy.get(l).GetStop()){
-                                        pietro.pasazerowieWysiadajacy.add(trasa.get(k).pasazerowieWysiadajacy.get(l));
-                                        trasa.get(k).pasazerowieWysiadajacy.get(l).SetStop(-1);
-                                    }
-                                }
-                            }
-                            pas_tmp.add(pasazerowie.get(n));
-                            is = true;
-                            dodano = true;
-                        }
-                    }
-                    if(is){
-                        pietroWindy = pas_tmp.get(pas_tmp.size()-1).GetStop();
-                        trasa.add(pietro);
-                        pietro = new Pietro();
-                        i++;
-                        is = false;
-                    }
-                    
-                    for(int k = 0; k < pas_tmp.size()-1; k++){
-                                pietro.numerPietra = pas_tmp.get(k).GetStop();
-                                //System.out.println("L:"+pietro2.numerPietra);
-                                pietro.pasazerowieWysiadajacy.add(pas_tmp.get(k));
-                                trasa.add(pietro);
-                                pietro = new Pietro();
-                                i++;
-                    }
-                    pas_tmp.clear();
-                }
-                if(dodano) break;
-
+            if(pustaWinda){
+                for(Pasazer pp : this.pozostaliPasazerowie)
+                    if(this.kierunekJazdy && pp.GetStart() > this.aktualnePietro && pp.GetStart() < nastepnePietro)
+                            nastepnePietro = pp.GetStart();
+                    else if(!this.kierunekJazdy && pp.GetStart() < this.aktualnePietro && pp.GetStart() > nastepnePietro)
+                            nastepnePietro = pp.GetStart();
             }
+            this.aktualnePietro = nastepnePietro;
+            if(this.aktualnePietro == this.maxPietro)
+                this.kierunekJazdy = false;
+            else if(this.aktualnePietro == 0)
+                this.kierunekJazdy = true;
+        }
 
-            
-    }
-    
-
-    return trasa;
+        return trasa;
     }
 
     public void SetMaxPietro(int maxPietro) {
         this.maxPietro = maxPietro;
     }
 
-    public static void main(String[] args) {
-        Pasazer p1 = new Pasazer(1,0,6);
-        Pasazer p2 = new Pasazer(2,9,1);
-        Pasazer p3 = new Pasazer(3,0,6);
-        Pasazer p4 = new Pasazer(4,6,1);
-        Pasazer p5 = new Pasazer(5,0,4);
-        Pasazer p6 = new Pasazer(6,0,5);
-        Pasazer p7 = new Pasazer(7,9,7);
-
-        List<Pasazer> lp = new ArrayList();
-        lp.add(p1);
-        lp.add(p2);
-        lp.add(p3);
-        lp.add(p4);
-        lp.add(p5);
-        lp.add(p6);
-        lp.add(p7);
-
-        List<Pietro> tr = new ArrayList();
-        AlgorytmNajblizszeWezwanie l = new AlgorytmNajblizszeWezwanie();
-        tr = l.Trasa(lp);
-
-       for(int h = 0; h < tr.size(); h++){
-           System.out.println("Pietro: "+tr.get(h).numerPietra);
-           System.out.print("Ws: ");
-           for(int i =0; i <tr.get(h).pasazerowieWsiadający.size();i++){
-               System.out.print(""+tr.get(h).pasazerowieWsiadający.get(i).GetName()+", ");
-           }
-           System.out.print("\nWy: ");
-           for(int i =0; i <tr.get(h).pasazerowieWysiadajacy.size();i++){
-               System.out.print(""+tr.get(h).pasazerowieWysiadajacy.get(i).GetName()+", ");
-           }
-           System.out.println();
-
-       }
-
+    public static void main(String [] args){
+        List<Pasazer> pasazerowie = new ArrayList<Pasazer>();
+        pasazerowie.add(new Pasazer(1, 0, 10));
+        pasazerowie.add(new Pasazer(2, 0, 12));
+        pasazerowie.add(new Pasazer(3, 1, 9));
+        pasazerowie.add(new Pasazer(4, 12, 10));
+        pasazerowie.add(new Pasazer(5, 12, 0));
+        pasazerowie.add(new Pasazer(6, 0, 4));
+        AlgorytmNajblizszeWezwanie anw = new AlgorytmNajblizszeWezwanie();
+        anw.SetMaxPietro(12);
+        anw.Trasa(pasazerowie);
     }
 }
-
-
