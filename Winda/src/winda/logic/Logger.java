@@ -17,11 +17,12 @@ import java.util.List;
 public class Logger {
     public Logger (List<Pietro> trasa){
         for(Pietro pietro : trasa)
+        {
             for(Pasazer pasazer : pietro.pasazerowieWysiadajacy)
                 log.add("Na Piętrze " + pietro.numerPietra + " wysiadł pasażer " + pasazer.GetName());
-        for(Pietro pietro : trasa)
             for(Pasazer pasazer : pietro.pasazerowieWsiadający)
                 log.add("Na Piętrze " + pietro.numerPietra + " wsiadł pasażer " + pasazer.GetName());
+        }
     }
 
     public void SaveLog(String filename){
@@ -29,7 +30,8 @@ public class Logger {
         try {
             fw = new FileWriter(filename);
             for (String s : log)
-                fw.write(s+'\n');
+                fw.write(s+'\r'+'\n');
+            fw.close();
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(Parser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

@@ -699,6 +699,11 @@ public class WindaView extends FrameView{
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem3.setText(resourceMap.getString("jMenuItem3.text")); // NOI18N
         jMenuItem3.setName("jMenuItem3"); // NOI18N
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         fileMenu.add(jMenuItem3);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(winda.gui.WindaApp.class).getContext().getActionMap(WindaView.class, this);
@@ -810,6 +815,12 @@ public class WindaView extends FrameView{
         this.em.setSpeed(this.jSlider1.getValue());
         // TODO add your handling code here:
     }//GEN-LAST:event_jSlider1StateChanged
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        if(fc.showSaveDialog(this.mainPanel) == JFileChooser.APPROVE_OPTION)
+            w.ZapiszLog(fc.getSelectedFile().getPath());
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;

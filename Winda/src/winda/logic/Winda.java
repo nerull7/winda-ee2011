@@ -24,6 +24,7 @@ public class Winda {
     private List<Pasazer> pasazerowieCollection = new ArrayList<Pasazer>();
     private Parser parser = new Parser();
     private List<Pietro> Trasa;
+    private Logger log;
 
     public Winda(){
         AlgorytmWindy = new AlgorytmGoraDol();
@@ -88,18 +89,23 @@ public class Winda {
         IloscPasazerow = pasazerowieCollection.size();
     }
 
+    public void ZapiszLog(String filename){
+        log.SaveLog(filename);
+    }
+
     public void Start(){
         AlgorytmWindy.SetMaxPietro(IloscPieter);
         Trasa.clear();
         Trasa = AlgorytmWindy.Trasa(pasazerowieCollection);
         CzasJazdy = Trasa.size()*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
+        log = new Logger(this.Trasa);
     }
 
     public static void main(String[] args) {
 
         Winda w = new Winda();
-        w.SetNajblizszeWzwanie();
+        //w.SetNajblizszeWzwanie();
         w.Start();
         List<Pietro> trasa = w.GetTrasa();
         for(int i = 0;i<trasa.size();i++)
