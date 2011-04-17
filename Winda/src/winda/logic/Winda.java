@@ -62,8 +62,8 @@ public class Winda {
     }
 
     public void AddPasazer(int start, int stop){
-        this.pasazerowieCollection.add(new Pasazer(IloscPasazerow, start, stop));
         IloscPasazerow++;
+        this.pasazerowieCollection.add(new Pasazer(IloscPasazerow, start, stop));
     }
 
     public double GetCzasJazdy(){
