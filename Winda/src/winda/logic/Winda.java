@@ -28,8 +28,8 @@ public class Winda {
 
     public Winda(){
         AlgorytmWindy = new AlgorytmGoraDol();
-        CzasJazdyPietro = 1;
-        CzasWeWyOsoby = 1;
+        CzasJazdyPietro = 1000;
+        CzasWeWyOsoby = 1000;
         IloscPieter = 12;
         AlgorytmWindy.SetMaxPietro(IloscPieter);
         pasazerowieCollection = parser.Wczytaj("c:\\DemoDane.txt");
