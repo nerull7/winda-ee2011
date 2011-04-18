@@ -32,6 +32,9 @@ public class WindaView extends FrameView{
     private ElevatorMovement em;
     Winda w = new Winda();
     private int floor_count =12;
+    private int czasWeWy = 1000;
+    private int czasJazdyPrzezPietro = 1000;
+
     public WindaView(SingleFrameApplication app) {
         super(app);
 
@@ -780,6 +783,7 @@ public class WindaView extends FrameView{
         String cj = (String) jSpinner6.getValue().toString();
         int CzasJazdy = Integer.parseInt(cj);
         w.SetCzasJazdyPietro(CzasJazdy);
+        this.czasJazdyPrzezPietro = CzasJazdy;
     }//GEN-LAST:event_jSpinner6StateChanged
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -787,20 +791,37 @@ public class WindaView extends FrameView{
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jSpinner7StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner7StateChanged
-        // TODO add your handling code here:
+        String cw = (String) jSpinner7.getValue().toString();
+        int czasWW = Integer.parseInt(cw);
+        w.SetCzasWeWyOsoby(czasWW);
+        this.czasWeWy = czasWW;
     }//GEN-LAST:event_jSpinner7StateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Pietro p = new Pietro();
-        p.numerPietra = 2;
-        p.pasazerowieWsiadający.add(new Pasazer(0,2,2));
-        this.em.setPassangersOnFloor(2, 1);
-        em.setTimeForFloor(1000);
+        w.SetNowyProjekt();
+        w.WczytajPasazerow("c:\\DemoDane.txt");
+        w.SetIloscPieter(floor_count);
+        w.SetCzasJazdyPietro(this.czasJazdyPrzezPietro);
+        w.SetCzasWeWyOsoby(czasWeWy);
+        if (this.jRadioButton1.isSelected())
+            w.SetGoraDol();
+        else
+            w.SetNajblizszeWzwanie();
+        this.newAnimation(floor_count);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        w.SetNowyProjekt();
+        jTextField1.setText("");
+        jTextField2.setText("");
+        w.SetIloscPieter(floor_count);
+        w.SetCzasJazdyPietro(this.czasJazdyPrzezPietro);
+        w.SetCzasWeWyOsoby(czasWeWy);
+        if (this.jRadioButton1.isSelected())
+            w.SetGoraDol();
+        else
+            w.SetNajblizszeWzwanie();
+        this.newAnimation(floor_count);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
