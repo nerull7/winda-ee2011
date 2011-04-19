@@ -33,8 +33,15 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
 
             for(Pasazer p : this.pasazerowie)
                 for(Pasazer pp : this.pozostaliPasazerowie)
-                    if(p.GetName() == pp.GetName() && p.GetStart() == this.aktualnePietro)
-                        tmpPasazerowie.add(p);
+                {
+                    boolean isIn = false;
+                    for(Pietro pi : this.trasa)
+                        for(Pasazer pw : pi.pasazerowieWsiadający)
+                            if(pw.GetName() == p.GetName())
+                                isIn = true;
+                        if(!isIn && p.GetName() == pp.GetName() && p.GetStart() == this.aktualnePietro)
+                            tmpPasazerowie.add(p);
+                }
 
             pietro.pasazerowieWsiadający = tmpPasazerowie;
 
@@ -90,15 +97,11 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
     }
 
     public static void main(String [] args){
-        List<Pasazer> pasazerowie = new ArrayList<Pasazer>();
-        pasazerowie.add(new Pasazer(1, 0, 10));
-        pasazerowie.add(new Pasazer(2, 0, 12));
-        pasazerowie.add(new Pasazer(3, 1, 9));
-        pasazerowie.add(new Pasazer(4, 12, 10));
-        pasazerowie.add(new Pasazer(5, 12, 0));
-        pasazerowie.add(new Pasazer(6, 0, 4));
+        List<Pasazer> pasazerowie;
+        Parser p = new Parser();
+        pasazerowie = p.Wczytaj("c:\\DemoDane.txt");
         AlgorytmNajblizszeWezwanie anw = new AlgorytmNajblizszeWezwanie();
-        anw.SetMaxPietro(12);
+        anw.SetMaxPietro(13);
         anw.Trasa(pasazerowie);
     }
 }
