@@ -1,6 +1,7 @@
 package winda.animation;
 
 import java.awt.ScrollPane;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import winda.gui.WindaApp;
@@ -21,11 +22,14 @@ public class ElevatorMovement extends Thread{
     private double speed;
     private int enter_exit_time;
 
-    private Pietro pietro;
+    private ArrayList<Pietro> pietro;
 
     @Override
     public void run(){
-        this.goToFloor(this.pietro);
+        for(int i=0;i<this.pietro.size();i++){
+            this.goToFloor(this.pietro.get(i));
+            System.out.println("goto:"+this.pietro.get(i).numerPietra+" in:"+this.pietro.get(i).pasazerowieWsiadający.size()+" out:"+this.pietro.get(i).pasazerowieWysiadajacy.size());
+        }
     }
 
     public ElevatorMovement(int floor_count){
@@ -45,12 +49,11 @@ public class ElevatorMovement extends Thread{
     }
 
     private void goUp(int number){
-        System.out.println(""+(this.jump_time*this.speed));
         while(this.ea.shift>(this.floor_size*(this.floor_count-(number+1)))){
             try {
                 this.ea.shift--;
                 this.ea.repaint();
-                Thread.sleep((long) (this.jump_time*this.speed));
+                this.sleep((long) (this.jump_time*this.speed));
             } catch (InterruptedException ex) {
                 Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -62,7 +65,7 @@ public class ElevatorMovement extends Thread{
             try {
                 this.ea.shift++;
                 this.ea.repaint();
-                Thread.sleep((long) (this.jump_time));
+                this.sleep((long) (this.jump_time*this.speed));
             } catch (InterruptedException ex) {
                 Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -70,25 +73,34 @@ public class ElevatorMovement extends Thread{
     }
 
     private void exitElevator(int number){
+        if(number<=0)
+            return;
+        System.out.println("exitElevator("+number+") elevator_passangers "+this.ea.elevator_passangers);
         for(int i=0;i<number;i++){
             try {
-                Thread.sleep((long) (this.enter_exit_time*this.speed));
+                this.ea.elevator_passangers--;
+                this.ea.repaint();
+                this.sleep((long) (this.enter_exit_time*this.speed));
             } catch (InterruptedException ex) {
                 Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.ea.elevator_passangers--;
         }
     }
 
     private void enterElevator(int number, int floor){
+        if(number<=0)
+            return;
+        System.out.println("enterElevator("+number+") elevator_passangers "+this.ea.elevator_passangers);
+        System.out.println("enterElevator("+number+") floor_passangers["+floor+"] "+this.ea.floor_passangers[floor]);
         for(int i=0;i<number;i++){
             try {
-                Thread.sleep((long) (this.enter_exit_time*this.speed));
+                this.ea.elevator_passangers++;
+                this.ea.floor_passangers[floor]--;
+                this.ea.repaint();
+                this.sleep((long) (this.enter_exit_time*this.speed));
             } catch (InterruptedException ex) {
                 Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.ea.elevator_passangers++;
-            this.ea.floor_passangers[floor]--;
         }
     }
 
@@ -109,6 +121,7 @@ public class ElevatorMovement extends Thread{
     }
 
     public void setPassangersInElevator(int passangers){
+        System.out.println("setPassangersInElevator("+passangers+")");
         this.ea.elevator_passangers = passangers;
     }
 
@@ -157,7 +170,7 @@ public class ElevatorMovement extends Thread{
         this.speed = 1;
     }
 
-    public void setPietro(Pietro pietro){
+    public void setPietro(ArrayList pietro){
         this.pietro = pietro;
     }
 

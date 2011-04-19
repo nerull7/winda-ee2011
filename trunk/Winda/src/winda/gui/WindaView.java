@@ -5,6 +5,7 @@
 package winda.gui;
 
 import java.awt.ScrollPane;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdesktop.application.Action;
@@ -110,11 +111,15 @@ public class WindaView extends FrameView{
     }
 
     private void goToPieto(){
-        for(int i=0;i<this.w.GetTrasa().size();i++){
+        this.em.setPietro((ArrayList) this.w.GetTrasa());
+        this.em.setEnterExitTime(czasWeWy);
+        Thread t = new Thread(em);
+        t.start();
+        /*for(int i=0;i<this.w.GetTrasa().size();i++){
             this.em.setPietro(this.w.GetTrasa().get(i));
             Thread t = new Thread(em);
             t.start();
-        }
+        }*/
     }
 
     private void drawAnimation(){
