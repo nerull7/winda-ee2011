@@ -13,5 +13,6 @@ import java.util.List;
  */
 public interface IAlgorytm {
     public List<Pietro> Trasa(List<Pasazer> pasazerowie);
+    public List<List<Pietro>> TrasaDwieWindy(List<Pasazer> pasazerowie);
     public void SetMaxPietro(int maxPietro);
 }
