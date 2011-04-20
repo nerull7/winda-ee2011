@@ -102,7 +102,7 @@ public class WindaView extends FrameView{
     }
     
     private void setupAnimation(){
-        int []passangers = new int[this.floor_count+1];
+        int []passangers = new int[this.floor_count];
         ArrayList<Pietro> temp = (ArrayList) this.w.GetTrasa();
         for(int i=0;i<temp.size();i++){
             int floor = temp.get(i).numerPietra;
