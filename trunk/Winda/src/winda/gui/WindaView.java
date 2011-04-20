@@ -102,9 +102,17 @@ public class WindaView extends FrameView{
     }
     
     private void setupAnimation(){
-        int []passangers = new int[this.floor_count];
-        for(int i=0;i<this.floor_count;i++)
-            passangers[i] = w.GetTrasa().get(i).pasazerowieWsiadający.size();
+        int []passangers = new int[this.floor_count+1];
+        ArrayList<Pietro> temp = (ArrayList) this.w.GetTrasa();
+        for(int i=0;i<temp.size();i++){
+            int floor = temp.get(i).numerPietra;
+            int tmp = passangers[floor];
+            System.out.println("iterator: "+i+"<"+temp.size());
+            System.out.println("pietra: "+floor+"<"+this.floor_count);
+            passangers[floor] = tmp+ temp.get(i).pasazerowieWsiadający.size();
+        }
+/*        for(int i=0;i<this.floor_count && i<w.GetTrasa().size();i++)
+            passangers[i] = w.GetTrasa().get(i).pasazerowieWsiadający.size();*/
                     
         this.em.setPassangersOnFloors(passangers);
         
@@ -123,7 +131,7 @@ public class WindaView extends FrameView{
     }
 
     private void drawAnimation(){
-        this.em = new ElevatorMovement(12);
+        this.em = new ElevatorMovement(12+1);
         this.scrollPane1.add(em.getElevatorAnimation());
     }
 
@@ -772,8 +780,8 @@ public class WindaView extends FrameView{
         String ip = (String) jSpinner1.getValue().toString();
         int iloscPieter = Integer.parseInt(ip);
         w.SetIloscPieter(iloscPieter);
-        this.newAnimation(iloscPieter);
-        this.floor_count = iloscPieter;
+        this.newAnimation(iloscPieter+1);
+        this.floor_count = iloscPieter+1;
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
