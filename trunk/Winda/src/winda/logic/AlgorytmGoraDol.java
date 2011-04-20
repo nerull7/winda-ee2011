@@ -75,8 +75,8 @@ public class AlgorytmGoraDol implements IAlgorytm {
     private void goDown(){
         int i =0;
         ArrayList<Pietro> pietra = this.setupPietra();
-        while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
-            i++;
+//        while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
+//            i++;
         while(i<this.pasazerowie.size()){
             if( this.pasazerowie.get(i).GetStart()>this.pasazerowie.get(i).GetStop()){
                 pietra.get(this.pasazerowie.get(i).GetStart()).pasazerowieWsiadający.add(this.pasazerowie.get(i));
@@ -85,8 +85,16 @@ public class AlgorytmGoraDol implements IAlgorytm {
             i++;
         }
         this.clearPietra(pietra);
+        pietra = this.mirrorPietra(pietra);
         if(!pietra.isEmpty())
             this.floors.addAll(pietra);
+    }
+
+    private ArrayList mirrorPietra(ArrayList<Pietro> pietro){
+        ArrayList<Pietro> mirror = new ArrayList();
+        for(int i = pietro.size()-1;i>=0;i--)
+            mirror.add(pietro.get(i));
+        return mirror;
     }
 
     private void clearPietra(ArrayList<Pietro> pietro){
