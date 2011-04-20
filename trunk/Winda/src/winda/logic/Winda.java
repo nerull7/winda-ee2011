@@ -58,7 +58,7 @@ public class Winda {
     }
 
     public void SetNowyProjekt(){
-        this.pasazerowieCollection.clear();
+        this.pasazerowieCollection = new ArrayList<Pasazer>();
         IloscPasazerow = 0;
     }
 
@@ -84,7 +84,7 @@ public class Winda {
     }
 
     public void WczytajPasazerow(String filename){
-        this.pasazerowieCollection.clear();
+        this.pasazerowieCollection = new ArrayList<Pasazer>();
         pasazerowieCollection = parser.Wczytaj(filename);
         IloscPasazerow = pasazerowieCollection.size();
     }
