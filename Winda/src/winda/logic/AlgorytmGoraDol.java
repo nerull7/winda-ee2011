@@ -22,16 +22,19 @@ public class AlgorytmGoraDol implements IAlgorytm {
     public AlgorytmGoraDol(){
         this.start_floor = 0;
         this.floor_count = 0;
+        this.floors = new ArrayList();
     }
 
     public AlgorytmGoraDol(int floor_count){
         this.start_floor = 0;
         this.floor_count = floor_count;
+        this.floors = new ArrayList();
     }
 
     public AlgorytmGoraDol(int floor_count, int start_floor){
         this.floor_count = floor_count;
         this.start_floor = start_floor;
+        this.floors = new ArrayList();
     }
 
     public void setStartFloor(int start_floor){
@@ -43,10 +46,11 @@ public class AlgorytmGoraDol implements IAlgorytm {
     }
 
     public void setFloorCount(int floor_count){
+        System.out.println("setFloorCount ("+floor_count+")");
         this.floor_count = floor_count;
     }
 
-    public int getFloorCount(int floor_count){
+    public int getFloorCount(){
         return this.floor_count;
     }
 
@@ -55,13 +59,17 @@ public class AlgorytmGoraDol implements IAlgorytm {
         ArrayList<Pietro> pietra = this.setupPietra();
         while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
             i++;
-        while(i<this.pasazerowie.size())
+        while(i<this.pasazerowie.size()){
             if( this.pasazerowie.get(i).GetStart()<this.pasazerowie.get(i).GetStop()){
                 pietra.get(this.pasazerowie.get(i).GetStart()).pasazerowieWsiadający.add(this.pasazerowie.get(i));
                 pietra.get(this.pasazerowie.get(i).GetStop()).pasazerowieWysiadajacy.add(this.pasazerowie.get(i));
             }
+            i++;
+        }
         this.clearPietra(pietra);
-        this.floors.addAll(pietra);
+
+        if(!pietra.isEmpty())
+            this.floors.addAll(pietra);
     }
 
     private void goDown(){
@@ -69,26 +77,29 @@ public class AlgorytmGoraDol implements IAlgorytm {
         ArrayList<Pietro> pietra = this.setupPietra();
         while(this.pasazerowie.get(i).GetStart()<this.acctual_floor)
             i++;
-        while(i<this.pasazerowie.size())
+        while(i<this.pasazerowie.size()){
             if( this.pasazerowie.get(i).GetStart()>this.pasazerowie.get(i).GetStop()){
                 pietra.get(this.pasazerowie.get(i).GetStart()).pasazerowieWsiadający.add(this.pasazerowie.get(i));
                 pietra.get(this.pasazerowie.get(i).GetStop()).pasazerowieWysiadajacy.add(this.pasazerowie.get(i));
             }
+            i++;
+        }
         this.clearPietra(pietra);
-        this.floors.addAll(pietra);
+        if(!pietra.isEmpty())
+            this.floors.addAll(pietra);
     }
 
     private void clearPietra(ArrayList<Pietro> pietro){
-        Pietro tmp;
-        for(int i=0;i<pietro.size();i++){
-            tmp=pietro.get(i);
-            if(tmp.pasazerowieWsiadający.isEmpty() && tmp.pasazerowieWysiadajacy.isEmpty())
+        for(int i=pietro.size()-1;i >= 0;i--){
+            if(pietro.get(i).pasazerowieWsiadający.isEmpty() && pietro.get(i).pasazerowieWysiadajacy.isEmpty())
                 pietro.remove(i);
         }
     }
 
     public List<Pietro> setCourse(){
-        PasazerSort sort = new PasazerSort(pasazerowie);
+        this.calculateFloors();
+
+        PasazerSort sort = new PasazerSort(this.pasazerowie);
         sort.sortByStart();
         this.acctual_floor = this.start_floor;
         
@@ -103,7 +114,20 @@ public class AlgorytmGoraDol implements IAlgorytm {
     }
 
     public void SetMaxPietro(int maxPietro) {
-        this.setFloorCount(floor_count);
+        this.setFloorCount(floor_count+1);
+    }
+
+    /*
+     * Fix for wrong number of floors
+     */
+    private void calculateFloors(){
+        for(int i=0;i<this.pasazerowie.size();i++){
+            if(this.pasazerowie.get(i).GetStart()>this.floor_count)
+                this.floor_count = this.pasazerowie.get(i).GetStart();
+            if(this.pasazerowie.get(i).GetStop()>this.floor_count)
+                this.floor_count = this.pasazerowie.get(i).GetStop();
+        }
+        this.floor_count++;
     }
 
     private ArrayList<Pietro> setupPietra(){

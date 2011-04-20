@@ -24,7 +24,7 @@ public class PasazerSort {
         for( i = 1+ (j = start);i<end;i++)
             if(this.array.get(i).GetStart()<this.array.get(start).GetStart()){
                 Pasazer tmp = this.array.get(++j);
-                this.array.set(++j, this.array.get(i));
+                this.array.set(j, this.array.get(i));
                 this.array.set(i, tmp);
             }
 
@@ -38,7 +38,7 @@ public class PasazerSort {
     private void mksortByStart(int start, int end){
         if( start < end ){
             int tmp = this.splitByStart( start, end );
-            this.mksortByStart( start, tmp-1 );
+            this.mksortByStart( start, tmp );
             this.mksortByStart( tmp+1, end );
         }
     }
