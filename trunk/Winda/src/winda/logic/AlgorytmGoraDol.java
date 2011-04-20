@@ -147,4 +147,8 @@ public class AlgorytmGoraDol implements IAlgorytm {
         }
         return pietra;
     }
+
+    public List<List<Pietro>> TrasaDwieWindy(List<Pasazer> pasazerowie) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

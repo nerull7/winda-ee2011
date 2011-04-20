@@ -104,4 +104,8 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
         anw.SetMaxPietro(13);
         anw.Trasa(pasazerowie);
     }
+
+    public List<List<Pietro>> TrasaDwieWindy(List<Pasazer> pasazerowie) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
