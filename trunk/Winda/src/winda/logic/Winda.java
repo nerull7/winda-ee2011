@@ -19,6 +19,7 @@ public class Winda {
     private double CzasJazdy;
     private double CzasWeWyOsoby;
     private double CzasSredniObslugi;
+    private double CzasPietra;
     private int IloscPieter;
     private int IloscPasazerow;
     private List<Pasazer> pasazerowieCollection = new ArrayList<Pasazer>();
@@ -75,6 +76,10 @@ public class Winda {
         return this.CzasSredniObslugi;
     }
 
+    public double GetCzasPietra(){
+        return this.CzasPietra;
+    }
+
     public List<Pietro> GetTrasa(){
         return this.Trasa;
     }
@@ -99,6 +104,7 @@ public class Winda {
         Trasa = AlgorytmWindy.Trasa(pasazerowieCollection);
         CzasJazdy = Trasa.size()*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
+        CzasPietra = CzasJazdy / IloscPieter;
         log = new Logger(this.Trasa);
     }
 
