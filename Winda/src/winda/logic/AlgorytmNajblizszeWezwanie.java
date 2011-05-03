@@ -88,6 +88,11 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
             else if(this.aktualnePietro == 0)
                 this.kierunekJazdy = true;
         }
+        for(int i = 1; i < trasa.size()-1; i++){
+            if(trasa.get(i).pasazerowieWsiadający.size() == 0 && trasa.get(i).pasazerowieWysiadajacy.size() == 0){
+                trasa.remove(i);
+            }
+        }
 
         return trasa;
     }
@@ -97,12 +102,34 @@ public class AlgorytmNajblizszeWezwanie implements IAlgorytm{
     }
 
     public static void main(String [] args){
-        List<Pasazer> pasazerowie;
+        List<Pasazer> pasazerowie = new ArrayList();
         Parser p = new Parser();
-        pasazerowie = p.Wczytaj("c:\\DemoDane.txt");
+        //pasazerowie = p.Wczytaj("c:\\DemoDane.txt");
         AlgorytmNajblizszeWezwanie anw = new AlgorytmNajblizszeWezwanie();
-        anw.SetMaxPietro(13);
-        anw.Trasa(pasazerowie);
+        anw.SetMaxPietro(12);
+
+        Pasazer p1=new Pasazer(1,2,7);
+        Pasazer p2=new Pasazer(2,8,2);
+        Pasazer p3=new Pasazer(3,6,3);
+        Pasazer p4=new Pasazer(4,2,6);
+        Pasazer p5=new Pasazer(5,11,5);
+        Pasazer p6=new Pasazer(6,10,2);
+        pasazerowie.add(p1);pasazerowie.add(p2);pasazerowie.add(p3);
+        pasazerowie.add(p4);pasazerowie.add(p5);pasazerowie.add(p6);
+        AlgorytmNajblizszeWezwanie  nw = new AlgorytmNajblizszeWezwanie();
+        nw.trasa = anw.Trasa(pasazerowie);
+        nw.SetMaxPietro(12);
+
+        for(int i = 0; i<nw.trasa.size(); i++){
+            System.out.println("P: "+nw.trasa.get(i).numerPietra);
+            for(int j=0; j < nw.trasa.get(i).pasazerowieWsiadający.size();j++){
+                 System.out.print("Ws: "+nw.trasa.get(i).pasazerowieWsiadający.get(j).GetName());
+            }
+            for(int j=0; j < nw.trasa.get(i).pasazerowieWysiadajacy.size();j++){
+                 System.out.print("Wy: "+nw.trasa.get(i).pasazerowieWysiadajacy.get(j).GetName());
+            }
+            System.out.println();
+        }
     }
 
     public List<List<Pietro>> TrasaDwieWindy(List<Pasazer> pasazerowie) {
