@@ -819,7 +819,7 @@ public class WindaView extends FrameView{
     }//GEN-LAST:event_jSpinner6StateChanged
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        w.UsunOstatniegoPasazera();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jSpinner7StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner7StateChanged

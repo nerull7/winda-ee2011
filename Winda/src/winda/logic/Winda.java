@@ -102,6 +102,11 @@ public class Winda {
         log = new Logger(this.Trasa);
     }
 
+    public void UsunOstatniegoPasazera(){
+        this.pasazerowieCollection.remove(this.pasazerowieCollection.size()-1);
+        this.IloscPasazerow --;
+    }
+
     public static void main(String[] args) {
 
         Winda w = new Winda();
