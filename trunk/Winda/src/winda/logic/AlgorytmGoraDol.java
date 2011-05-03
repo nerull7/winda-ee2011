@@ -149,6 +149,21 @@ public class AlgorytmGoraDol implements IAlgorytm {
     }
 
     public List<List<Pietro>> TrasaDwieWindy(List<Pasazer> pasazerowie) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //Zakładam że winda pierwsza (index 0 w List<List<Pietro>> trasa) stoi na dole i jedzie w górę,
+        //a winda druga (index 1 w List<List<Pietro>> trasa) stoi na górze i jedzie na dół
+        List<List<Pietro>> trasa = new ArrayList<List<Pietro>>();
+        List<Pasazer> pasazerowieJadacyWGore = new ArrayList<Pasazer>();
+        List<Pasazer> pasazerowieJadacyWDol = new ArrayList<Pasazer>();
+
+        for(Pasazer p : pasazerowie)
+            if(p.GetStart() < p.GetStop())
+                pasazerowieJadacyWGore.add(p);
+            else
+                pasazerowieJadacyWDol.add(p);
+
+        trasa.add(this.Trasa(pasazerowieJadacyWGore));
+        trasa.add(this.Trasa(pasazerowieJadacyWDol));
+
+        return trasa;
     }
 }
