@@ -65,7 +65,7 @@ public class Winda {
 
     public void AddPasazer(int start, int stop){
         IloscPasazerow++;
-        this.pasazerowieCollection.add(new Pasazer(IloscPasazerow, start, stop));
+        this.getPasazerowieCollection().add(new Pasazer(IloscPasazerow, start, stop));
     }
 
     public double GetCzasJazdy(){
@@ -85,13 +85,13 @@ public class Winda {
     }
 
     public void ZapiszPasazerow(String filename){
-        parser.Zapisz(filename, pasazerowieCollection);
+        parser.Zapisz(filename, getPasazerowieCollection());
     }
 
     public void WczytajPasazerow(String filename){
         this.pasazerowieCollection = new ArrayList<Pasazer>();
         pasazerowieCollection = parser.Wczytaj(filename);
-        IloscPasazerow = pasazerowieCollection.size();
+        IloscPasazerow = getPasazerowieCollection().size();
     }
 
     public void ZapiszLog(String filename){
@@ -101,7 +101,7 @@ public class Winda {
     public void Start(){
         AlgorytmWindy.SetMaxPietro(IloscPieter);
         Trasa.clear();
-        Trasa = AlgorytmWindy.Trasa(pasazerowieCollection);
+        Trasa = AlgorytmWindy.Trasa(getPasazerowieCollection());
         CzasJazdy = Trasa.size()*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
         CzasPietra = CzasJazdy / IloscPieter;
@@ -109,7 +109,7 @@ public class Winda {
     }
 
     public void UsunOstatniegoPasazera(){
-        this.pasazerowieCollection.remove(this.pasazerowieCollection.size()-1);
+        this.getPasazerowieCollection().remove(this.getPasazerowieCollection().size()-1);
         this.IloscPasazerow --;
     }
 
@@ -124,5 +124,12 @@ public class Winda {
         System.out.print('\n');
         System.out.println("Czas jazdy = " + w.GetCzasJazdy());
         System.out.println("Średni czas obsługi jednego pasażera = " + w.GetCzasSredniObslugi());
+    }
+
+    /**
+     * @return the pasazerowieCollection
+     */
+    public List<Pasazer> getPasazerowieCollection() {
+        return pasazerowieCollection;
     }
 }
