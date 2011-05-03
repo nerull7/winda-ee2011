@@ -32,7 +32,7 @@ import winda.logic.Winda;
 public class WindaView extends FrameView{
     private ElevatorMovement em;
     Winda w = new Winda();
-    private int floor_count =12;
+    private int floor_count =13;
     private int czasWeWy = 1000;
     private int czasJazdyPrzezPietro = 1000;
 
@@ -104,11 +104,12 @@ public class WindaView extends FrameView{
     private void setupAnimation(){
         int []passangers = new int[this.floor_count];
         ArrayList<Pietro> temp = (ArrayList) this.w.GetTrasa();
-        for(int i=0;i<temp.size();i++){
-            int floor = temp.get(i).numerPietra;
-            int tmp = passangers[floor];
-            System.out.println("iterator: "+i+"<"+temp.size());
+        for(int i=0;i<this.w.GetTrasa().size();i++){
+            int floor = this.w.GetTrasa().get(i).numerPietra;
+            System.out.println("iterator: "+i+"<"+this.w.GetTrasa().size());
             System.out.println("pietra: "+floor+"<"+this.floor_count);
+            
+            int tmp = passangers[floor];
             passangers[floor] = tmp+ temp.get(i).pasazerowieWsiadający.size();
         }
 /*        for(int i=0;i<this.floor_count && i<w.GetTrasa().size();i++)
@@ -131,8 +132,8 @@ public class WindaView extends FrameView{
     }
 
     private void drawAnimation(){
-        this.em = new ElevatorMovement(12+1);
-        this.scrollPane1.add(em.getElevatorAnimation());
+        this.em = new ElevatorMovement(this.floor_count);
+        this.scrollPane1.add(this.em.getElevatorAnimation());
     }
 
     private void newAnimation(int floor_count){
@@ -169,6 +170,7 @@ public class WindaView extends FrameView{
         jPanel1 = new javax.swing.JPanel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
+        jCheckBox2 = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
@@ -244,7 +246,7 @@ public class WindaView extends FrameView{
         jPanel1.setName("jPanel1"); // NOI18N
 
         jSpinner1.setName("jSpinner1"); // NOI18N
-        jSpinner1.setValue(12);
+        jSpinner1.setValue(13);
         jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner1StateChanged(evt);
@@ -253,6 +255,14 @@ public class WindaView extends FrameView{
 
         jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
+
+        jCheckBox2.setText(resourceMap.getString("jCheckBox2.text")); // NOI18N
+        jCheckBox2.setName("jCheckBox2"); // NOI18N
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -264,6 +274,9 @@ public class WindaView extends FrameView{
                 .addGap(18, 18, 18)
                 .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jCheckBox2)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +285,8 @@ public class WindaView extends FrameView{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBox2))
         );
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -659,7 +673,7 @@ public class WindaView extends FrameView{
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabel1)
@@ -672,7 +686,7 @@ public class WindaView extends FrameView{
                                     .addComponent(jButton2))
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -686,7 +700,7 @@ public class WindaView extends FrameView{
                                         .addComponent(jButton3)
                                         .addComponent(jButton4))
                                     .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))))
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -780,8 +794,8 @@ public class WindaView extends FrameView{
         String ip = (String) jSpinner1.getValue().toString();
         int iloscPieter = Integer.parseInt(ip);
         w.SetIloscPieter(iloscPieter);
-        this.newAnimation(iloscPieter+1);
-        this.floor_count = iloscPieter+1;
+        this.newAnimation(iloscPieter);
+        this.floor_count = iloscPieter;
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -860,6 +874,14 @@ public class WindaView extends FrameView{
             w.ZapiszLog(fc.getSelectedFile().getPath());
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        if(jCheckBox2.isSelected())
+            this.em.enableSecondElevator();
+        else
+            this.em.disableSecondElevator();
+        this.newAnimation(this.floor_count);
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -870,6 +892,7 @@ public class WindaView extends FrameView{
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
