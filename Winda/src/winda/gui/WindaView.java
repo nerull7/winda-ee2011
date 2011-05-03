@@ -776,6 +776,11 @@ public class WindaView extends FrameView{
         else{
             w.AddPasazer(start, stop);
         }
+
+        jSpinner3.setValue(0);
+        jSpinner4.setValue(0);
+        jSpinner5.setValue(0);
+        jCheckBox1.setSelected(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jSpinner1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jSpinner1AncestorAdded
