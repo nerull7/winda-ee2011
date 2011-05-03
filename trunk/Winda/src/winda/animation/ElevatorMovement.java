@@ -21,6 +21,7 @@ public class ElevatorMovement extends Thread{
     private double jump_time;
     private double speed;
     private int enter_exit_time;
+    private boolean second_elevator;
 
     private ArrayList<Pietro> pietro;
 
@@ -44,7 +45,7 @@ public class ElevatorMovement extends Thread{
             this.goDown(pietro.numerPietra);
         this.actual_floor = pietro.numerPietra;
 
-        this.exitElevator(pietro.pasazerowieWysiadajacy.size());
+        this.exitElevator(pietro.pasazerowieWysiadajacy.size(), pietro.numerPietra);
         this.enterElevator(pietro.pasazerowieWsiadający.size(), pietro.numerPietra);
     }
 
@@ -72,13 +73,14 @@ public class ElevatorMovement extends Thread{
         }
     }
 
-    private void exitElevator(int number){
+    private void exitElevator(int number, int floor){
         if(number<=0)
             return;
         System.out.println("exitElevator("+number+") elevator_passangers "+this.ea.elevator_passangers);
         for(int i=0;i<number;i++){
             try {
                 this.ea.elevator_passangers--;
+                this.ea.exited_floor_passangers[floor]++;
                 this.ea.repaint();
                 this.sleep((long) (this.enter_exit_time*this.speed));
             } catch (InterruptedException ex) {
@@ -145,11 +147,14 @@ public class ElevatorMovement extends Thread{
     public void setSpeed(int speed){
         if(speed == 50)
             this.speed = 1;
-        else if(speed <50){
+        else if(speed >50){
+            speed = 100-speed;
             this.speed = (((double)speed+50)/2)/100;
         }
-        else
+        else{
+            speed = 100-speed;
             this.speed = (((double)speed+50)*2)/100;
+        }
     }
 
     public void setFloorsCount(int floors){
@@ -164,8 +169,10 @@ public class ElevatorMovement extends Thread{
     private void init(){
         this.time_for_floor = 1000;
         this.actual_floor = 0;
-        this.ea = new ElevatorAnimation(this.floor_count);
+        this.ea = new ElevatorAnimation(this.floor_count, this.second_elevator);
+        /* Start z parteru */
         this.ea.shift = this.floor_size * (this.floor_count-1);
+        this.ea.shift2 = this.floor_size * (this.floor_count-1);
         this.jump_time = ((double)this.time_for_floor)/((double)(this.floor_size));
         this.speed = 1;
     }
@@ -174,4 +181,13 @@ public class ElevatorMovement extends Thread{
         this.pietro = pietro;
     }
 
+    public void enableSecondElevator(){
+        this.second_elevator = true;
+        this.ea.repaint();
+    }
+
+    public void disableSecondElevator(){
+        this.second_elevator = false;
+        this.ea.repaint();
+    }
 }
