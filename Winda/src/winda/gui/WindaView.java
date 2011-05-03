@@ -120,7 +120,7 @@ public class WindaView extends FrameView{
     }
 
     private void goToPieto(){
-        this.em.setPietro((ArrayList) this.w.GetTrasa());
+        this.em.setPietro((ArrayList) this.w.GetTrasa(), 1);
         this.em.setEnterExitTime(czasWeWy);
         Thread t = new Thread(em);
         t.start();

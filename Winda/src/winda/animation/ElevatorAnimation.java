@@ -35,6 +35,7 @@ public class ElevatorAnimation extends JApplet {
     public int second_elevator_passangers;
     public int[] floor_passangers;
     public int[] exited_floor_passangers;
+    public int[] second_exited_floor_passangers;
 
     public ElevatorAnimation(int floor_count, boolean second_elevator){
         this.floor_count = floor_count;
@@ -43,6 +44,7 @@ public class ElevatorAnimation extends JApplet {
         this.floor_font = new Font("Serif", Font.PLAIN, 16);
         this.floor_passangers = new int[floor_count];
         this.exited_floor_passangers = new int[floor_count];
+        this.second_exited_floor_passangers = new int[floor_count];
         if(second_elevator){
             this.x_dimension = 300;
             this.secondElevator = true;
@@ -88,6 +90,7 @@ public class ElevatorAnimation extends JApplet {
         if(this.secondElevator){
             this.drawSecondElevatorShaft(buffig);
             this.drawSecondElevator(buffig);
+            this.drawSecondExitedPassangers(buffig);
         }
         
         return buffi;
@@ -133,6 +136,16 @@ public class ElevatorAnimation extends JApplet {
         for(int i=1;i<=this.floor_count;i++)
             if(this.exited_floor_passangers[this.floor_count-i]>0)
                 g2.drawString(""+this.exited_floor_passangers[this.floor_count-i], 10, (this.floor_size*i)-15);
+    }
+
+    /*
+     * Rysowanie ilości pasażerów którzy wysiadli na piętrach dla drugiej windy
+     */
+    private void drawSecondExitedPassangers(Graphics2D g2){
+        g2.setFont(this.elevator_font);
+        for(int i=1;i<=this.floor_count;i++)
+            if(this.second_exited_floor_passangers[this.floor_count-i]>0)
+                g2.drawString(""+this.second_exited_floor_passangers[this.floor_count-i], 10+220, (this.floor_size*i)-15);
     }
 
     /*
