@@ -33,7 +33,7 @@ public class ElevatorMovement extends Thread{
     public void run(){
         this.first.setPietro(this.pietro);
         this.first.start();
-        if(!this.second_elevator){
+        if(this.second_elevator){
             this.second.setPietro(this.second_pietro);
             this.second.start();
         }
