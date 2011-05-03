@@ -14,6 +14,9 @@ import winda.logic.Pietro;
 public class ElevatorMovement extends Thread{
     private ElevatorAnimation ea;
 
+    Elevator first;
+    Elevator second;
+
     private int floor_count;
     private final int floor_size = 50;
     private int time_for_floor; // Tymczasowo /* Miliseconds */
@@ -24,86 +27,22 @@ public class ElevatorMovement extends Thread{
     private boolean second_elevator;
 
     private ArrayList<Pietro> pietro;
+    private ArrayList<Pietro> second_pietro;
 
     @Override
     public void run(){
-        for(int i=0;i<this.pietro.size();i++){
-            this.goToFloor(this.pietro.get(i));
-            System.out.println("goto:"+this.pietro.get(i).numerPietra+" in:"+this.pietro.get(i).pasazerowieWsiadający.size()+" out:"+this.pietro.get(i).pasazerowieWysiadajacy.size());
+        this.first.setPietro(this.pietro);
+        this.first.start();
+        if(!this.second_elevator){
+            this.second.setPietro(this.second_pietro);
+            this.second.start();
         }
     }
 
     public ElevatorMovement(int floor_count){
         this.floor_count = floor_count;
         this.init();
-    }
-
-    public void goToFloor(Pietro pietro){
-        if(this.actual_floor<pietro.numerPietra)
-            this.goUp(pietro.numerPietra);
-        else if(this.actual_floor>pietro.numerPietra)
-            this.goDown(pietro.numerPietra);
-        this.actual_floor = pietro.numerPietra;
-
-        this.exitElevator(pietro.pasazerowieWysiadajacy.size(), pietro.numerPietra);
-        this.enterElevator(pietro.pasazerowieWsiadający.size(), pietro.numerPietra);
-    }
-
-    private void goUp(int number){
-        while(this.ea.shift>(this.floor_size*(this.floor_count-(number+1)))){
-            try {
-                this.ea.shift--;
-                this.ea.repaint();
-                this.sleep((long) (this.jump_time*this.speed));
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    private void goDown(int number) {
-        while(this.ea.shift<(this.floor_size*(this.floor_count-(number+1)))){
-            try {
-                this.ea.shift++;
-                this.ea.repaint();
-                this.sleep((long) (this.jump_time*this.speed));
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    private void exitElevator(int number, int floor){
-        if(number<=0)
-            return;
-        System.out.println("exitElevator("+number+") elevator_passangers "+this.ea.elevator_passangers);
-        for(int i=0;i<number;i++){
-            try {
-                this.ea.elevator_passangers--;
-                this.ea.exited_floor_passangers[floor]++;
-                this.ea.repaint();
-                this.sleep((long) (this.enter_exit_time*this.speed));
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    private void enterElevator(int number, int floor){
-        if(number<=0)
-            return;
-        System.out.println("enterElevator("+number+") elevator_passangers "+this.ea.elevator_passangers);
-        System.out.println("enterElevator("+number+") floor_passangers["+floor+"] "+this.ea.floor_passangers[floor]);
-        for(int i=0;i<number;i++){
-            try {
-                this.ea.elevator_passangers++;
-                this.ea.floor_passangers[floor]--;
-                this.ea.repaint();
-                this.sleep((long) (this.enter_exit_time*this.speed));
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ElevatorMovement.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        this.speed = 1;
     }
 
     public ElevatorAnimation getElevatorAnimation(){
@@ -138,6 +77,9 @@ public class ElevatorMovement extends Thread{
     public void setTimeForFloor(int time){
         this.time_for_floor = time;
         this.jump_time = ((double)time)/((double)(this.floor_size));
+        this.first.setTimeForFloor(time);
+        if(this.second_elevator)
+            this.second.setTimeForFloor(time);
     }
 
     public double getSpeed(){
@@ -155,15 +97,24 @@ public class ElevatorMovement extends Thread{
             speed = 100-speed;
             this.speed = (((double)speed+50)*2)/100;
         }
+        this.first.setSpeed(this.speed);
+        if(this.second_elevator)
+            this.second.setSpeed(this.speed);
     }
 
     public void setFloorsCount(int floors){
         this.floor_count = floors;
+        this.first.setFloorsCount(floors);
+        if(this.second_elevator)
+            this.second.setFloorsCount(floors);
         this.init();
     }
 
     public void setEnterExitTime(int time){
         this.enter_exit_time = time;
+        this.first.setEnterExitTime(time);
+        if(this.second_elevator)
+            this.second.setEnterExitTime(time);
     }
 
     private void init(){
@@ -174,20 +125,33 @@ public class ElevatorMovement extends Thread{
         this.ea.shift = this.floor_size * (this.floor_count-1);
         this.ea.shift2 = this.floor_size * (this.floor_count-1);
         this.jump_time = ((double)this.time_for_floor)/((double)(this.floor_size));
-        this.speed = 1;
+        this.second_elevator = false;
+
+        this.first = new Elevator(this.ea, this.floor_count, 1);
     }
 
-    public void setPietro(ArrayList pietro){
-        this.pietro = pietro;
+    public void setPietro(ArrayList pietro, int elevator){
+        if(elevator == 1){
+            this.pietro = pietro;
+            this.first.setPietro(pietro);
+        }
+        else{
+            this.second_pietro = pietro;
+            this.second.setPietro(pietro);
+        }
     }
 
     public void enableSecondElevator(){
         this.second_elevator = true;
+        this.second = new Elevator(this.ea, this.floor_count, 2);
+        this.second.setSpeed(this.speed);
         this.ea.repaint();
     }
 
     public void disableSecondElevator(){
         this.second_elevator = false;
+        this.second.interrupt();
+        this.second = null;
         this.ea.repaint();
     }
 }
