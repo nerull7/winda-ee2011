@@ -101,6 +101,8 @@ public class WindaView extends FrameView{
         t.start();
         this.drawAnimation();
         this.setupDemoPassangersList();
+        this.jCheckBox2.setVisible(false);
+        this.jButton4.setVisible(false);
     }
 
     private void setupDemoPassangersList(){
@@ -157,6 +159,8 @@ public class WindaView extends FrameView{
 
     private void goToPieto(){
         this.em.setPietro((ArrayList) this.w.GetTrasa(), 1);
+        if (this.jCheckBox2.isSelected())
+            this.em.setPietro((ArrayList) this.w.GetTrasaDwa(), 2);
         this.em.setEnterExitTime(czasWeWy);
         Thread t = new Thread(em);
         t.start();
@@ -963,10 +967,13 @@ public class WindaView extends FrameView{
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        if(jCheckBox2.isSelected())
+        if(jCheckBox2.isSelected()) {
             this.em.enableSecondElevator();
-        else
+            this.w.SetDwieWindy();
+        } else {
             this.em.disableSecondElevator();
+            this.w.SetJednaWindy();
+        }
         this.newAnimation(this.floor_count);
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
