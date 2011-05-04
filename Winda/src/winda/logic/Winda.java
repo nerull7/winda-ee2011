@@ -25,6 +25,8 @@ public class Winda {
     private List<Pasazer> pasazerowieCollection = new ArrayList<Pasazer>();
     private Parser parser = new Parser();
     private List<Pietro> Trasa;
+    private List<Pietro> TrasaDwa;
+    private boolean DwieWindy = false;
     private Logger log;
 
     public Winda(){
@@ -40,6 +42,14 @@ public class Winda {
 
     public void SetCzasJazdyPietro(double czas){
         this.CzasJazdyPietro = czas;
+    }
+
+    public void SetDwieWindy (){
+        this.DwieWindy = true;
+    }
+
+    public void SetJednaWindy (){
+        this.DwieWindy = false;
     }
 
     public void SetCzasWeWyOsoby(double czas){
@@ -84,6 +94,10 @@ public class Winda {
         return this.Trasa;
     }
 
+    public List<Pietro> GetTrasaDwa(){
+        return this.TrasaDwa;
+    }
+
     public void ZapiszPasazerow(String filename){
         parser.Zapisz(filename, getPasazerowieCollection());
     }
@@ -101,7 +115,13 @@ public class Winda {
     public void Start(){
         AlgorytmWindy.SetMaxPietro(IloscPieter);
         Trasa.clear();
-        Trasa = AlgorytmWindy.Trasa(getPasazerowieCollection());
+        if (DwieWindy){
+            List<List<Pietro>> trasy = AlgorytmWindy.TrasaDwieWindy(pasazerowieCollection);
+            this.Trasa = trasy.get(0);
+            this.TrasaDwa = trasy.get(1);
+        } else {
+            Trasa = AlgorytmWindy.Trasa(getPasazerowieCollection());
+        }
         CzasJazdy = Trasa.size()*CzasJazdyPietro+IloscPasazerow*CzasWeWyOsoby*2;
         CzasSredniObslugi = CzasJazdy / IloscPasazerow;
         CzasPietra = CzasJazdy / IloscPieter;
