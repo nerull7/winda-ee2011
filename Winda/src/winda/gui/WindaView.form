@@ -69,7 +69,7 @@
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jSeparator1" alignment="1" pref="541" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" alignment="1" pref="550" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -94,9 +94,9 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="label1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="list1" pref="435" max="32767" attributes="0"/>
+                                          <Component id="list1" pref="429" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="scrollPane1" alignment="1" pref="465" max="32767" attributes="0"/>
+                                      <Component id="scrollPane1" alignment="1" pref="459" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -107,7 +107,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <Component id="jSeparator2" alignment="0" pref="498" max="32767" attributes="1"/>
+                              <Component id="jSeparator2" alignment="0" pref="492" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                   </Group>
@@ -119,6 +119,8 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
+            <Property name="font" type="java.awt.Font" resourceKey="jLabel1.font"/>
+            <Property name="foreground" type="java.awt.Color" resourceKey="jLabel1.foreground"/>
             <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
             <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
           </Properties>
