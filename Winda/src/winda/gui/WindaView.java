@@ -152,7 +152,7 @@ public class WindaView extends FrameView{
         }
 /*        for(int i=0;i<this.floor_count && i<w.GetTrasa().size();i++)
             passangers[i] = w.GetTrasa().get(i).pasazerowieWsiadający.size();*/
-                    
+        this.em.interrupt();
         this.em.setPassangersOnFloors(passangers);
         
     }
